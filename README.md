@@ -47,5 +47,9 @@ Met deze functie worden de cirkels opnieuw gekleurd. De kleur is afhankelijk van
 ### Legenda 
 Met deze functie wordt er onder het vakje met de knoppen een legenda getekend op het moment dat een van de knoppen wordt ingedrukt. De legenda kan getekend worden voor continue data of voor discrete data. Als de data continu is (dus bij tijd) wordt het eerst discreet gemaakt, door bijvoorbeeld per uur een aparte kleur te maken. Er moet dan worden bepaald in welk uur elk programma valt. De kleuren die worden gebruikt zijn van dezelfde tint en variëren alleen in verzadiging. Voor discrete data kunnen kleuren willekeurig worden gekozen uit een kleurenset (zo lang de kleuren maar genoeg en evenveel van elkaar verschillen). Deze functie heeft dus de data uit het csv-bestand nodig en geeft de gebruikte kleuren door aan de functie Cirkels kleuren. 
 
+# Mogelijke problemen
 
+## Verkrijgen van data
+De data is niet rechtstreeks beschikbaar als csv maar moet eerst gescraped worden van een webpagina. Een mogelijk probleem is dat het schrijven van de scraper lang duurt, waardoor er minder tijd is voor de daadwerkelijke visualisatie. Een mogelijke oplossing is het deels hergebruiken van een scraper die gemaakt is voor het vak Data Processing. In het uiterste geval kan de csv ook met de hand worden gemaakt, aangezien het maar om 50 datapunten gaat. 
 
+## 
