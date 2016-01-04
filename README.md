@@ -9,8 +9,12 @@ Jenny Hasenack
 ## Samenvatting
 
 ## Probleem
-Inzicht krijgen in meest bekeken programma's van een jaar. Wat voor programma's waren dit, hoe laat kwamen ze, van welke zender zijn ze. 
-Ik wil inzicht geven in welke programma's het meest bekeken zijn en wanneer deze zijn uitgezonden. 
+
+De oorspronkelijke data van de 50 best bekeken programma's staat in een aantal lijsten op www.kijkcijferonderzoek.nl. Doordat de data in lijsten is opgeschreven, is het moeilijk om inzicht te krijgen in trends in de data. Door deze visualisatie kunnen er op een overizichtelijke manier door de gebruiker conclusies worden getrokken over de samenstelling van de 50 best bekeken programma's, voor ieder jaar individueel en door de jaren heen. 
+
+Deze visualisatie probeert de gebruiker een inzicht te geven in de oorsprong van de meest populaire programma's in een jaar. Ook laat het zien hoe een zender het doet wat betreft populaire programma's door de jaren heen. Zenders kunnen op dit gebied met elkaar worden vergeleken. 
+
+Verder geeft het programma weer welke programma's er per jaar in de top 50 van meest bekeken programma's stonden. Van deze programma's kan dan worden bekeken welke zender, uitzendtijd en categorie daarbij hoort. 
 
 
 ## Schets 
@@ -41,8 +45,19 @@ Deze visualisatie heeft verschillende onderdelen. Er zijn twee grafieken: een di
 ### Grafiek over de jaren heen
 
 #### De grafiek
+Dit is een lijngrafiek die de tijd uitzet tegen het aantal programma's van een zender in de top 50. De lijn heeft een kleur die specifiek is per zender. Als op een van de zenders in de legenda wordt geklikt, wordt de bijbehorende lijn in deze grafiek getekend. Deze functie krijgt dus informatie van de legendafunctie en uit het csv-bestand. 
 
+#### Legenda 
+In deze legenda wordt weergegeven welke kleur lijn bij welke zender hoort. Ook kan er op de zenders worden geklikt (of aangevinkt) om de bijbehorende lijn te laten tekenen of juist weg te halen. Deze functie geeft informatie aan de grafiekfunctie en krijgt informatie van de gebruiker.
 
+#### Mouseover
+Deze mouseover-functie houdt bij waar de cursor van de gebruiker is. Als de cursor een tijdje stilstaat wordt de informatie over het jaar waar de cursor zich bevindt weergegeven door de informatiefunctie. 
+
+#### Informatie 
+Deze functie tekent een vakje met informatie over het datapunt op het moment dat de cursor van de gebruiker op dat datapunt staat Hij wordt dus aangeroepen door de functie Mouseover. Het vakje wordt rechtsboven de cursor getekend. De informatie voor in het vakje wordt weer uit het csv-bestand gehaald. Deze functie heeft dus alle informatie uit het csv-bestand nodig en de muiscoördinaten van de Mouseover-functie. 
+
+#### Knop jaartal
+Deze knop staat op de x-as van de grafiek. Voor elk jaar is er een. Als de gebruiker op deze knop drukt, wordt onderstaande grafiek voor dat jaar opgeroepen. 
 
 ### Grafiek per jaar
 
@@ -53,7 +68,7 @@ De oorspronkelijke grafiek is de basis van dit deel van de visualisatie. Deze is
 De mouseover-functie houdt bij waar de cursor van de gebruiker zich bevindt. Als dit binnen een bepaalde afstand van het midden van een van de cirkels is, wordt er een functie aangeroepen die een vakje tekent waar de informatie over dat datapunt in wordt weergegeven. Dat gebeurt met de functie Informatie. 
 
 #### Informatie 
-Deze functie tekent een vakje met informatie over het datapunt op het moment dat de cursor van de gebruiker op dat datapunt staat Hij wordt dus aangeroepen door de functie Mouseover. Het vakje wordt rechtsboven de cursor getekend. De informatie voor in het vakje wordt weer uit het csv-bestand gehaald. Deze functie heeft dus alle informatie uit het csv-bestand nodig en de muiscoördinaten van de Mouseover-functie. 
+Doet het zelfde als bovenstaand Informatie-functie, maar dan met andere data uiteraard.
 
 #### Knoppen 
 De knoppen kunnen door de gebruiker worden aangeklikt om meer inzicht te krijgen in de variatie van de data op verschillende gebieden. Er zijn drie knoppen: zender, categorie en tijd. Op het moment dat een van deze knoppen wordt ingedrukt, worden twee functies aangeroepen: een om de cirkels opnieuw te kleuren en een om een legenda te tekenen. 
