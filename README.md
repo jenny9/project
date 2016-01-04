@@ -76,12 +76,20 @@ De knoppen kunnen door de gebruiker worden aangeklikt om meer inzicht te krijgen
 #### Cirkels kleuren
 Met deze functie worden de cirkels opnieuw gekleurd. De kleur is afhankelijk van de informatie op dat punt en wordt bepaald door de Legenda-functie. Deze functie heeft dus informatie van deze functie nodig en toegang tot de html-elementen die in de Grafiek-functie zijn getekend. 
 
-### Legenda 
+#### Legenda 
 Met deze functie wordt er onder het vakje met de knoppen een legenda getekend op het moment dat een van de knoppen wordt ingedrukt. De legenda kan getekend worden voor continue data of voor discrete data. Als de data continu is (dus bij tijd) wordt het eerst discreet gemaakt, door bijvoorbeeld per uur een aparte kleur te maken. Er moet dan worden bepaald in welk uur elk programma valt. De kleuren die worden gebruikt zijn van dezelfde tint en variëren alleen in verzadiging. Voor discrete data kunnen kleuren willekeurig worden gekozen uit een kleurenset (zo lang de kleuren maar genoeg en evenveel van elkaar verschillen). Deze functie heeft dus de data uit het csv-bestand nodig en geeft de gebruikte kleuren door aan de functie Cirkels kleuren. 
 
 # Mogelijke problemen
 
 ## Verkrijgen van data
-De data is niet rechtstreeks beschikbaar als csv maar moet eerst gescraped worden van een webpagina. Een mogelijk probleem is dat het schrijven van de scraper lang duurt, waardoor er minder tijd is voor de daadwerkelijke visualisatie. Een mogelijke oplossing is het deels hergebruiken van een scraper die gemaakt is voor het vak Data Processing. In het uiterste geval kan de csv ook met de hand worden gemaakt, aangezien het maar om 50 datapunten gaat. 
+De data is niet rechtstreeks beschikbaar als csv maar moet eerst gescraped worden van een webpagina. Een mogelijk probleem is dat het schrijven van de scraper lang duurt, waardoor er minder tijd is voor de daadwerkelijke visualisatie. Een mogelijke oplossing is het deels hergebruiken van een scraper die gemaakt is voor het vak Data Processing. 
 
-## 
+## Overzicht
+Omdat er twee grafieken worden getekend kan dit zorgen voor een verwarrend maakproces. Er is immers veel te doen en beide grafieken hebben onderdelen die op elkaar lijken en die verward kunnen worden. Een oplossing hiervoor is het beginnen met het maken van de grafiek die één jaar weergeeft, en pas als die af is aan de grote grafiek te beginnen. 
+
+## Overlappende datapunten
+De kans is niet groot, maar het kan zijn dat er datapunten zullen overlappen (in de jaarlijkse grafiek). Afhankelijk van hoe vaak dit voor zou komen kan er worden gekeken of sommige datapunten in dit geval iets moeten worden verschoven. Dit levert echter waarschijnlijk wel extra code op. 
+
+# Reviews gelijksoortige visualisaties
+
+
