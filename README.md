@@ -1,13 +1,14 @@
 # Interactieve datavisualisatie voor de 50 best bekeken tv-programma's van het jaar 
-Jenny Hasenack 
-10367519
-04-01-2016
-Datavisualisatie 
-Jenny Hasenack 
-10367519 
+Jenny Hasenack  
+10367519  
+04-01-2016  
+Datavisualisatie  
+Jenny Hasenack  
+10367519  
 
 ## Samenvatting
-In dit project wordt een visualisatie gemaakt van de top 50 meest bekeken tv-programma's over een aantal jaar. Er wordt weergegeven welke zenders hoeveel programma's in de top 50 hebben staan en hoe dit verandert over de jaren heen. Ook is er voor ieder individueel jaar een grafiek met een overzicht van de samenstelling van de top 50: welke programma's staan er in, met informatie over de datum, tijd, zender en kijkersaantal. 
+In dit project wordt een visualisatie gemaakt van de top 50 meest bekeken tv-programma's over een aantal jaar. Er wordt met een lijngrafiek weergegeven welke zenders hoeveel programma's in de top 50 hebben staan en hoe dit verandert over de jaren heen. Ook verschijnt er, wanneer de gebruiker op een jaartal klikt, voor dat jaar een grafiek met een overzicht van de samenstelling van de top 50: welke programma's staan er in, met informatie over de datum, tijd, zender en kijkersaantal. 
+De visualisatie is interactief. De gebruiker kan zelf kiezen welke zenders er worden toegevoegd aan de lijngrafiek. Ook verschijnt er in beide grafieken bij mouseover een vakje met informatie over het datapunt. Verder kan in de grafiek van één jaar met behulp van kleuren overzichtelijk worden gemaakt van welke zenders een programma is, welke categorie of op welk tijdstip het wordt uitgezonden. De gebruiker klikt zelf aan welk overzicht hij wil zien.  
 
 ## Probleem
 
