@@ -2,9 +2,9 @@
 Jenny Hasenack  
 10367519  
 04-01-2016  
+Programmeerproject
 Datavisualisatie  
-Jenny Hasenack  
-10367519  
+
 
 ## Samenvatting
 In dit project wordt een visualisatie gemaakt van de top 50 meest bekeken tv-programma's over een aantal jaar. Er wordt met een lijngrafiek weergegeven welke zenders hoeveel programma's in de top 50 hebben staan en hoe dit verandert over de jaren heen. Ook verschijnt er, wanneer de gebruiker op een jaartal klikt, voor dat jaar een grafiek met een overzicht van de samenstelling van de top 50: welke programma's staan er in, met informatie over de datum, tijd, zender en kijkersaantal. 
