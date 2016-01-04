@@ -7,6 +7,7 @@ Jenny Hasenack
 10367519 
 
 ## Samenvatting
+In dit project wordt een visualisatie gemaakt van de top 50 meest bekeken tv-programma's over een aantal jaar. Er wordt weergegeven welke zenders hoeveel programma's in de top 50 hebben staan en hoe dit verandert over de jaren heen. Ook is er voor ieder individueel jaar een grafiek met een overzicht van de samenstelling van de top 50: welke programma's staan er in, met informatie over de datum, tijd, zender en kijkersaantal. 
 
 ## Probleem
 
@@ -91,5 +92,10 @@ Omdat er twee grafieken worden getekend kan dit zorgen voor een verwarrend maakp
 De kans is niet groot, maar het kan zijn dat er datapunten zullen overlappen (in de jaarlijkse grafiek). Afhankelijk van hoe vaak dit voor zou komen kan er worden gekeken of sommige datapunten in dit geval iets moeten worden verschoven. Dit levert echter waarschijnlijk wel extra code op. 
 
 # Reviews gelijksoortige visualisaties
+http://www.theguardian.com/football/ng-interactive/2014/jun/11/-sp-world-cup-goals-golden-boot-scorers-history 
+
+Ook een grafiek die een absoluut aantal telt, niet aantal programma's in de top 50 maar aantal doelpunten van mensen die een golden boot hebben gewonnen. Deze grafiek is ook interactief. Ook hier worden kleuren gebruikt om extra informatie te geven. Er is ook een mouseover die informatie geeft bij het plaatsen van de cursor op een bolletje. Vind het zelf mooi gemaakt, maar een beetje onoverzichtelijk omdat je niet goed kan zien wie wie is. Ook snap ik de kleuren niet helemaal, het is gek om licht- en donkerblauw te kiezen voor twee onderdelen die niets met elkaar te maken hebben, want dat suggereert het misschien wel. Verder vind ik het een goede visualisatie die mooi en snel werkt. 
+
+http://www.theguardian.com/football/ng-interactive/2014/jun/24/-sp-world-cup-league-competition 
 
 
