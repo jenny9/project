@@ -1,4 +1,4 @@
-Interactieve datavisualisatie voor de 50 best bekeken uitzendingen van het jaar
+#Interactieve datavisualisatie voor de 50 best bekeken uitzendingen van het jaar
 Jenny Hasenack
 10367519
 04-01-2016
@@ -20,17 +20,19 @@ Verder geeft het programma weer welke programma's er per jaar in de top 50 van m
 
 De visualisatie bestaat uit twee delen. Een deel dat de verandering van de samenstelling van de top 50 meest bekeken uitzendingen weergeeft over de jaren heen, en een deel dat per jaar weergeeft welke programma's er in de top 50 stonden.
 
-
+![](Doc/ontwerp3.png)
 
 Het eerste deel is in de vorm van een lijngrafiek. Deze geeft het aantal uitzendingen in de top 50 per jaar weer van één zender. De gebruiker kan zelf op de legenda klikken om zenders toe te voegen of te verwijderen uit de grafiek. Onder de legenda kan de gebruiker kiezen om de grafieken van individuele zenders weer te geven, of om publieke zenders met commerciële te vergelijken. Er worden in het laatste geval twee lijnen getekend.
 
-
+![](Doc/ontwerp4.png)
 
 Er wordt een legenda getekend bij de x-coördinaat van de muis met informatie over de samenstelling van de top 50 in dat jaar. Ook wordt er een verticale lijn getekend zodat de gebruiker de lijnen goed kan vergelijken. Op de x-as van de grafiek kan op het jaartal worden geklikt. Er verschijnt dan onder de grafiek onderstaande tweede grafiek met informate over dat jaar:
 
-
+![](Doc/ontwerp1.png)
 
 Op de horizontale as wordt de tijd weergegeven en op de verticale as het absoluut aantal kijkers. De 50 best bekeken uitzendingen worden in deze grafiek geplaatst en zijn zichbaar als cirkels. Als de gebruiker met de muis op een van de cirkels staat, verschijnt er informatie over het desbetreffende programma, bijvoorbeeld de titel, de categorie (sport, entertainment, nieuws etcetera), de zender, de datum en tijd van uitzending en het aantal kijkers. 
+
+![](Doc/ontwerp2.png)
 
 Ook staan er naast de grafiek een aantal koppen waar de gebruiker op kan klikken. Deze knoppen hebben de titels 'categorie', 'zender' en 'tijd'. Als de gebruiker op één van deze knoppen klikt zal de grafiek de datapunten kleuren. Bij het klikken op 'categorie' worden bijvoorbeeld de programma's die onder de categorie 'sport' vallen groen gekleurd en de nieuwsprogramma's rood (etc.). Er verschijnt dan ook een legenda om de gebruikte kleuren te verklaren. Zender en categorie zijn discrete verdelingen. Deze zijn eenvoudig weer te geven door een kleur toe te kennen aan iedere zender of categorie. Deze kleuren kunnen redelijk willekeurig worden gekozen. Tijd is een continue verdeling. Voor de duidelijkheid zal hier kunstmatig een discrete verdeling van worden gemaakt, door bijvoorbeeld per uur een kleur te kiezen. Hiervoor zullen kleuren uit een kleurenschaal worden gekozen, bijvoorbeeld een kleur die steeds verzadigder wordt naarmate het tijdstip later wordt. Hierdoor kunnen de tijdstippen beter worden vergeleken.
 
