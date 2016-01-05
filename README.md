@@ -1,4 +1,4 @@
-# Interactieve datavisualisatie voor de 50 best bekeken tv-programma's van het jaar 
+# Interactieve datavisualisatie voor de 50 best bekeken uitzendingen van het jaar 
 Jenny Hasenack  
 10367519  
 04-01-2016  
@@ -7,25 +7,25 @@ Datavisualisatie
 
 
 ## Samenvatting
-In dit project wordt een visualisatie gemaakt van de top 50 meest bekeken tv-programma's over een aantal jaar. Er wordt met een lijngrafiek weergegeven welke zenders hoeveel programma's in de top 50 hebben staan en hoe dit verandert over de jaren heen. Ook verschijnt er, wanneer de gebruiker op een jaartal klikt, voor dat jaar een grafiek met een overzicht van de samenstelling van de top 50: welke programma's staan er in, met informatie over de datum, tijd, zender en kijkersaantal. 
+In dit project wordt een visualisatie gemaakt van de top 50 meest bekeken uitzendingen van een aantal jaar. Er wordt met een lijngrafiek weergegeven welke zenders hoeveel uitzendingen van hun programma's in de top 50 hebben staan en hoe dit verandert over de jaren heen. Ook verschijnt er, wanneer de gebruiker op een jaartal klikt, voor dat jaar een grafiek met een overzicht van de samenstelling van de top 50: welke programma's staan er in, met informatie over de datum, tijd, zender en kijkersaantal. 
 De visualisatie is interactief. De gebruiker kan zelf kiezen welke zenders er worden toegevoegd aan de lijngrafiek. Ook verschijnt er in beide grafieken bij mouseover een vakje met informatie over het datapunt. Verder kan in de grafiek van één jaar met behulp van kleuren overzichtelijk worden gemaakt van welke zenders een programma is, welke categorie of op welk tijdstip het wordt uitgezonden. De gebruiker klikt zelf aan welk overzicht hij wil zien.  
 
 ## Probleem
 
-De oorspronkelijke data van de 50 best bekeken programma's staat in een aantal lijsten op www.kijkcijferonderzoek.nl. Doordat de data in lijsten is opgeschreven, is het moeilijk om inzicht te krijgen in trends in de data. Door deze visualisatie kunnen er op een overizichtelijke manier door de gebruiker conclusies worden getrokken over de samenstelling van de 50 best bekeken programma's, voor ieder jaar individueel en door de jaren heen. 
+De oorspronkelijke data van de 50 best bekeken uitzendingen staat in een aantal lijsten op www.kijkcijferonderzoek.nl. Doordat de data in lijsten is opgeschreven, is het moeilijk om inzicht te krijgen in trends in de data. Door deze visualisatie kunnen er op een overizichtelijke manier door de gebruiker conclusies worden getrokken over de samenstelling van de 50 best bekeken uitzendingen, voor ieder jaar individueel en door de jaren heen. 
 
-Deze visualisatie probeert de gebruiker een inzicht te geven in de oorsprong van de meest populaire programma's in een jaar. Ook laat het zien hoe een zender het doet wat betreft populaire programma's door de jaren heen. Zenders kunnen op dit gebied met elkaar worden vergeleken. 
+Deze visualisatie probeert de gebruiker een inzicht te geven in de oorsprong van de meest populaire uitzendingen/programma's in een jaar. Ook laat het zien hoe een zender het doet wat betreft meest bekeken uitzendingen door de jaren heen. Zenders kunnen op dit gebied met elkaar worden vergeleken. 
 
-Verder geeft het programma weer welke programma's er per jaar in de top 50 van meest bekeken programma's stonden. Van deze programma's kan dan worden bekeken welke zender, uitzendtijd en categorie daarbij hoort. 
+Verder geeft het programma weer welke programma's er per jaar in de top 50 van meest bekeken uitzendingen stonden. Van deze programma's kan dan worden bekeken welke zender, uitzendtijd en categorie daarbij hoort. 
 
 
 ## Schets 
 
-De visualisatie bestaat uit twee delen. Een deel dat de verandering van de samenstelling van de top 50 meest bekeken programma's weergeeft over de jaren heen, en een deel dat per jaar weergeeft welke programma's er in de top 50 stonden. 
+De visualisatie bestaat uit twee delen. Een deel dat de verandering van de samenstelling van de top 50 meest bekeken uitzendingen weergeeft over de jaren heen, en een deel dat per jaar weergeeft welke programma's er in de top 50 stonden. 
 
 ![](Doc/ontwerp3.png) 
 
-Het eerste deel is in de vorm van een lijngrafiek. Deze geeft het aantal programma's in de top 50 per jaar weer van één zender. De gebruiker kan zelf op de legenda klikken om zenders toe te voegen of te verwijderen uit de grafiek. Onder de legenda kan de gebruiker kiezen om de grafieken van individuele zenders weer te geven, of om publieke zenders met commerciële te vergelijken. Er worden in het laatste geval twee lijnen getekend. 
+Het eerste deel is in de vorm van een lijngrafiek. Deze geeft het aantal uitzendingen in de top 50 per jaar weer van één zender. De gebruiker kan zelf op de legenda klikken om zenders toe te voegen of te verwijderen uit de grafiek. Onder de legenda kan de gebruiker kiezen om de grafieken van individuele zenders weer te geven, of om publieke zenders met commerciële te vergelijken. Er worden in het laatste geval twee lijnen getekend. 
 
 ![](Doc/ontwerp4.png)
 
@@ -33,7 +33,7 @@ Er wordt een legenda getekend bij de x-coördinaat van de muis met informatie ov
 
 ![](Doc/ontwerp1.png)
 
-Op de horizontale as wordt de tijd weergegeven en op de verticale as het absoluut aantal kijkers. De 50 best bekeken programma's worden in deze grafiek geplaatst en zijn zichbaar als cirkels. Als de gebruiker met de muis op een van de cirkels staat, verschijnt er informatie over het desbetreffende programma, bijvoorbeeld de titel, de categorie (sport, entertainment, nieuws etcetera), de zender, de datum en tijd van uitzending en het aantal kijkers. 
+Op de horizontale as wordt de tijd weergegeven en op de verticale as het absoluut aantal kijkers. De 50 best bekeken uitzendingen worden in deze grafiek geplaatst en zijn zichbaar als cirkels. Als de gebruiker met de muis op een van de cirkels staat, verschijnt er informatie over het desbetreffende programma, bijvoorbeeld de titel, de categorie (sport, entertainment, nieuws etcetera), de zender, de datum en tijd van uitzending en het aantal kijkers. 
 ![](Doc/ontwerp2.png)
 
 Ook staan er naast de grafiek een aantal koppen waar de gebruiker op kan klikken. Deze knoppen hebben de titels 'categorie', 'zender' en 'tijd'. Als de gebruiker op één van deze knoppen klikt zal de grafiek de datapunten kleuren. Bij het klikken op 'categorie' worden bijvoorbeeld de programma's die onder de categorie 'sport' vallen groen gekleurd en de nieuwsprogramma's rood (etc.). Er verschijnt dan ook een legenda om de gebruikte kleuren te verklaren. Zender en categorie zijn discrete verdelingen. Deze zijn eenvoudig weer te geven door een kleur toe te kennen aan iedere zender of categorie. Deze kleuren kunnen redelijk willekeurig worden gekozen. Tijd is een continue verdeling. Voor de duidelijkheid zal hier kunstmatig een discrete verdeling van worden gemaakt, door bijvoorbeeld per uur een kleur te kiezen. Hiervoor zullen kleuren uit een kleurenschaal worden gekozen, bijvoorbeeld een kleur die steeds verzadigder wordt naarmate het tijdstip later wordt. Hierdoor kunnen de tijdstippen beter worden vergeleken. 
