@@ -1,8 +1,11 @@
 proces 
 
 5/1 
-Besloten om categorieën niet meer te doen. Blijken niet in de dataset te staan en met de hand toevoegen is te veel werk. Nog nadenken over wat het gaat vervangen. 
-Alle data gescraped. Besloten 2014 niet mee te tellen, omdat toen alle publieke omroep-zenders van naam zijn veranderd. Creeërt wellicht verwarring voor gebruiker. 
+Besloten om categorieÃ«n niet meer te doen. Blijken niet in de dataset te staan en met de hand toevoegen is te veel werk. Nog nadenken over wat het gaat vervangen. 
+Alle data gescraped. Besloten 2014 niet mee te tellen, omdat toen alle publieke omroep-zenders van naam zijn veranderd. CreeÃ«rt wellicht verwarring voor gebruiker. 
 Besloten dat doel beter verwoord moet worden: het gaat om de top 50 meest bekende uitzendingen, niet programma's.
 
 Mijn d3/javascript-kennis is blijkbaar erg weggezakt omdat ik Data Processing bijna een jaar geleden heb gevolgd. Ga ik morgen proberen op te frissen met hulp.
+
+6/1
+D3 is inmiddels weer beter. Helft van het prototype gemaakt. Moet nog nadenken over welke kleuren ik wil gebruiken. Verder geen bijzonderheden. 
