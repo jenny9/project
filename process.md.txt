@@ -9,3 +9,6 @@ Mijn d3/javascript-kennis is blijkbaar erg weggezakt omdat ik Data Processing bi
 
 6/1
 D3 is inmiddels weer beter. Helft van het prototype gemaakt. Moet nog nadenken over welke kleuren ik wil gebruiken. Verder geen bijzonderheden. 
+
+7/1 
+Alvast onderzoek gedaan naar het maken van knoppen van de ticks (om de jaargrafiek op te roepen) maar dat lijkt heel moeilijk. Toch de knoppen er onder? Of klikken op de lijn? Sommige dingen zijn nu nog gehardcode in het prototype. 
