@@ -6,9 +6,6 @@ Jenny Hasenack
 Programmeerproject   
 Datavisualisatie   
 
-## MVP
-
-
 ## User Interface
 De totale visualisatie ziet er als volgt uit. Als de gebruiker op de webpagina komt, is er één grafiek te zien. Dit is de grafiek van het aantal uitzendingen in de top 50 door de jaren heen. 
 Bij binnenkomst op de webpagina is standaard de grafiek met de lijn van iedere zender te zien. Rechts naast de grafiek is een legenda. Hier staat een lijst van alle zenders die in ieder geval één keer met een uitzending in de top 50 zijn gekomen. In de legenda wordt verklaard welke kleur lijn bij welke zender hoort.
@@ -21,6 +18,11 @@ Als de gebruiker met de cursor over de grafiek beweegt, verschijnt er (als de mu
 Onder de grafiek bevinden zich knoppen met de beschikbare jaartallen. Als de gebruiker op een van de knoppen klikt, verschijnt onder de lijngrafiek een andere grafiek. Deze grafiek geeft de top 50 best bekeken tv-momenten van het desbetreffende jaar weer. Alle datapunten worden gerepresenteerd als een cirkel. Als de gebruiker met zijn cursor in de cirkel komt, verschijnt (na een korte timeout) een informatebox. 
 Hierin staat de volgende informatie weergegeven: titel, datum, tijd, zender, aantal kijkers. Als de gebruiker de cursor weer beweegt verdwijnt deze informatiebox. 
 Naast de tweede grafiek staan een aantal knoppen: Channel, Time en Category. Op het moment dat de gebruiker op één van deze knoppen klikt, worden de cirkels ingekleurd voor hun waarde bij de desbetreffende knop. Voor Channel en Category zijn dat losse kleuren, voor Time zijn het kleuren uit een kleurenschaal. Er verschijnt tevens een legenda die de gebruikte kleuren verklaart. Als de gebruiker nogmaals op dezelfde knop klikt, verdwijnen de kleuren weer.
+
+
+## MVP
+De MVP is in dit geval een grafiek met de lijnen van alle zenders (x-as: jaartal, y-as: aantal uitzendingen in top 50) (grafiek 1) met zijn legenda, waarbij op ieder jaartal geklikt kan worden om de uitzendingen in de top 50 van dat jaar op een grafiek (x-as: datum, y-as: aantal kijkers) te zien. Ook is er bij de tweede grafiek een mouseoverfunctie nodig die de informatie van de aflevering geeft in een infobox als de cursor op dat datapunt komt. 
+De andere onderdelen van de visualisatie voegen ook zeker wat toe, maar zijn niet noodzakelijk om het doel van de visualisatie te bereiken: inzicht geven in het verloop van de top 50 door de jaren heen en de samenstelling per jaar. Deze andere onderdelen vergroten het gebruikersgemak en zorgen zo dat er makkelijker conclusies kunnen worden getrokken. Het gaat dus om de mouseoverfunctie in grafiek 1, de mogelijkheid lijnen toe te voegen of te verwijderen, de mogelijkhied te kiezen tussen commercieel vs. publiek in grafiek 1, de mogelijkheid kleur toe te voegen in grafiek 2 en de de legenda die bij dat kleurgebruik hoort. Deze onderdelen behoren niet tot de MVP.
 
 ## Code
 Hieronder zullen de verschillende onderdelen van de code worden beschreven, en de manier waarop ze samenwerken. Alle onderdelen met een '1' horen bij de grafiek die de data van de zenders over de jaren heen weergeeft en alle onderdelen met een '2' horen bij de grafiek die de data van een individueel jaar weergeeft.
