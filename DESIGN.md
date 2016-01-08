@@ -19,3 +19,30 @@ Onder de grafiek bevinden zich knoppen met de beschikbare jaartallen. Als de geb
 Hierin staat de volgende informatie weergegeven: titel, datum, tijd, zender, aantal kijkers. Als de gebruiker de cursor weer beweegt verdwijnt deze informatiebox. 
 Naast de tweede grafiek staan een aantal knoppen: Channel, Time en Category. Op het moment dat de gebruiker op één van deze knoppen klikt, worden de cirkels ingekleurd voor hun waarde bij de desbetreffende knop. Voor Channel en Category zijn dat losse kleuren, voor Time zijn het kleuren uit een kleurenschaal. Er verschijnt tevens een legenda die de gebruikte kleuren verklaart. Als de gebruiker nogmaals op dezelfde knop klikt, verdwijnen de kleuren weer.
 
+## Code
+Hieronder zullen de verschillende onderdelen van de code worden beschreven, en de manier waarop ze samenwerken. Alle onderdelen met een '1' horen bij de grafiek die de data van de zenders over de jaren heen weergeeft en alle onderdelen met een '2' horen bij de grafiek die de data van een individueel jaar weergeeft.
+
+
+### Knoppen legenda 1
+Deze knoppen staan boven de legenda van grafiek 1. De gebruiker kan hiermee bepalen of de data moet worden verdeeld in 'zenders individueel' of 'publieke vs. commerciele zenders'. Op het moment dat er op een van deze knoppen wordt geklikt, wordt er een functie opgeroepen die de huidige legenda 1 verwijdert en een nieuwe tekent op basis van de keuze van de gebruiker. Ook worden dan alle lijnen verwijderd.
+
+### Legenda 1
+Deze legenda wordt getekend door een functie die wordt aangeroepen door 'Knoppen legenda 1'. Deze legenda bevat een aantal knoppen die bepalen welke lijnen er worden getekend in grafiek 1. Op het moment dat er een knop wordt aangeklikt, wordt er een functie aangeroepen. Deze functie controleert of deze lijn al bestaat. Is dat het geval, dan wordt hij verwijderd. Anders wordt hij getekend. 
+
+### Grafiek 1 
+Deze grafiek wordt getekend en heeft toegang tot alle data 1 (dus de data van alle zenders over de jaren heen). Op basis van deze data worden er onder de grafiek ook een aantal knoppen getekend, een voor elk jaar.
+
+### Knoppen grafiek 1
+Deze knoppen roepen wanneer ze worden aangeklikt een functie op die grafiek 2 verwijdert als deze al getekend was en opnieuw grafiek 2 tekent met de informatie van dat jaar. 
+
+### Mouseover
+De mouseoverfunctie komt in deze datavisualisatie twee keer voor, een keer voor grafiek 1 en een keer voor grafiek 2. Op het moment dat de muis over respectievelijk de svg van grafiek 1 en grafiek 2 beweegt, wordt een functie aangeroepen die respectievelijk informatiebox 1 en 2 tekent. Om deze informatiebox te tekenen is respectievelijk data 1 en data 2 nodig. 
+
+### Grafiek 2 
+Wordt getekend met een functie die wordt getekend als een van de knoppen van grafiek 1 wordt aangeklikt. Hiervoor is data 2 nodig. Wordt ook beïnvloed door de knoppen van grafiek 2.
+
+### Knoppen grafiek 2
+Als een van deze knoppen (Zender, Tijd, Categorie) wordt aangeklikt, wordt een functie aangeroepen die de kleuren van grafiek 2 aanpast, afhankelijk van de waarde van het datapunt. Hiervoor is ook data 2 nodig. Ook wordt een functie aangeroepen die een legenda tekent om de gebruikte kleuren te verklaren. 
+
+### Legenda 2 
+Wordt getekend op het moment dat een van de knoppen van grafiek 2 wordt aangeklikt. Om deze te tekenen is ook data 2 nodig, om het aantal verschillende kleuren of de range van de data te bepalen.
