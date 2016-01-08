@@ -31,7 +31,7 @@ Het ontwerp is te zien in de volgende afbeelding:
 ![](Doc/ontwerp5.png)
 Bij de zichtbare onderdelen van de visualisatie is geschreven hoe ze worden genoemd in onderstaande uitleg. Hoe de onderdelen met elkaar samenwerken is verbeeld in de volgende afbeelding en hieronder toegelicht:
 
-![](Doc/ontwerp6.png)
+![](Doc/ontwerp6.jpg)
 
 #### Knoppen legenda 1
 Deze knoppen staan boven de legenda van grafiek 1. De gebruiker kan hiermee bepalen of de data moet worden verdeeld in 'zenders individueel' of 'publieke vs. commerciele zenders'. Op het moment dat er op een van deze knoppen wordt geklikt, wordt er een functie opgeroepen die de huidige legenda 1 verwijdert en een nieuwe tekent op basis van de keuze van de gebruiker. Ook worden dan alle lijnen verwijderd.
