@@ -1,14 +1,18 @@
 proces 
 
-5/1 
+#5/1 
 Besloten om categorieën niet meer te doen. Blijken niet in de dataset te staan en met de hand toevoegen is te veel werk. Nog nadenken over wat het gaat vervangen. 
 Alle data gescraped. Besloten 2014 niet mee te tellen, omdat toen alle publieke omroep-zenders van naam zijn veranderd. Creeërt wellicht verwarring voor gebruiker. 
 Besloten dat doel beter verwoord moet worden: het gaat om de top 50 meest bekende uitzendingen, niet programma's.
 
 Mijn d3/javascript-kennis is blijkbaar erg weggezakt omdat ik Data Processing bijna een jaar geleden heb gevolgd. Ga ik morgen proberen op te frissen met hulp.
 
-6/1
+#6/1
 D3 is inmiddels weer beter. Helft van het prototype gemaakt. Moet nog nadenken over welke kleuren ik wil gebruiken. Verder geen bijzonderheden. 
 
-7/1 
+#7/1 
 Alvast onderzoek gedaan naar het maken van knoppen van de ticks (om de jaargrafiek op te roepen) maar dat lijkt heel moeilijk. Toch de knoppen er onder? Of klikken op de lijn? Sommige dingen zijn nu nog gehardcode in het prototype. 
+
+#8/1
+Presentatie gehouden en design document gemaakt. Er moeten nog een aantal belangrijke dingen gebeuren. Sommige dingen werken wel maar zijn niet zo netjes, bijv het maken van een heel nieuw svg element ipv een g element. Alle data moet in één functie worden geladen, of moet het een variabele zijn? Misschien moet het hele programma binnen de functie staan die de data laadt. Waar ik ook over twijfel is of het wel slim is om 1 csv file te hebben per zender en 1 per jaar. Misschien moet dat allemaal bij elkaar in 2 csv's ? Ga ik maandag overleggen. 
+Nog geen oplossing voor overlappende data. Ga ik mee werken als de rest het doet. Leuke ideeën gekregen nav presentatie: nieuwsevents toevoegen of iets met best bekeken programma's aller tijden.
