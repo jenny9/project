@@ -4,17 +4,17 @@ var margin1 = {top: 25, left: 25, right: 500, bottom: 25};
 var width1 = 1500;
 var height1 = 350;
 
-var legendMargin = 20;
-var legend1Width = margin1.right * 0.25;
-var legend1Height = height1 - margin1.bottom - margin1.top;
-var legend2Width = margin1.right * 0.25; 
-var legend2Height = 0.5 * height1;
-
 var buttonHeight = 40;
 var buttonWidth = 80;
 
+var legendMargin = 20;
+var legend1Width = margin1.right * 0.25;
+var legend1Height = height1 - margin1.bottom - margin1.top - buttonHeight;
+var legend2Width = margin1.right * 0.25; 
+var legend2Height = 0.5 * height1;
+
 var channels = ['Ned1', 'Ned2', 'Ned3', 'RTL4', 'SBS 6', 'NICK', 'Tien', 'Ver', 'YRN'];
-var years = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013']; 
+var years = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'];
 var buttonOptions = ['Channel', 'Time', 'Category']
 var colors = ['red', 'blue', 'green', 'brown', 'purple', 'lime', 'black', 'magenta', 'gold'];
 
@@ -38,8 +38,7 @@ var canvas2 = d3.select("body")
 var legend1Canvas = canvas1.append("svg")
 					.attr("height", legend1Height)
 					.attr("width", legend1Width)
-					.attr("transform", "translate(" + (width1 - margin1.right + legendMargin) + "," + margin1.top + ")")
-					.append("g");
+					.attr("transform", "translate(" + (width1 - margin1.right + legendMargin) + "," + margin1.top + ")");
 
 // make canvas for legend2
 var legend2Canvas = canvas2.append("svg")
@@ -77,7 +76,6 @@ var border1 = legend1Canvas.append("rect")
 			.attr("stroke", "black");
 
 // make group element for buttons of legend 2
-
 var buttonGroup = legend2Canvas.selectAll("g")
 			.data(buttonOptions)
 			.enter()
