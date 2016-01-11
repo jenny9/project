@@ -18,6 +18,8 @@ var years = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '20
 var buttonOptions = ['Channel', 'Time', 'Category']
 var colors = ['red', 'blue', 'green', 'brown', 'purple', 'lime', 'black', 'magenta', 'gold'];
 
+var mouse = [0,0]
+
 // make svg canvas for channel graph
 var canvas1 = d3.select("body")
 			.append("svg")
@@ -48,14 +50,14 @@ var legend2Canvas = canvas2.append("svg")
 					.append("g"); 
 
 // add color blocks to legend1
-var legend1 = legend1Canvas.selectAll("rect")
+var buttons1 = legend1Canvas.selectAll("rect")
 			.data(channels)
 			.enter()
 				.append("rect")
-				.attr("height", 10)
-				.attr("width", 20)
+				.attr("height", 20)
+				.attr("width", 30)
 				.attr("x", 75)
-				.attr("y", function(d, i) { return legend1Height / 10 * (i + 1) - 10; })
+				.attr("y", function(d, i) { return legend1Height / 10 * (i + 1) - 15; })
 				.attr("fill", function(d, i) { return colors[i]});
 
 // add legend1Text to legend1
@@ -95,8 +97,6 @@ var textLegend2 = buttonGroup.append("text")
 					.attr("x", buttonWidth * 0.1)
 					.attr("y", buttonHeight * 0.5);
 
-legend2.on("click", function(d) {console.log('hoi hoi hoi')});
-
 // make border around legend 2
 var border2 = legend2Canvas.append("rect")
 		.attr("height", legend2Height)
@@ -105,21 +105,52 @@ var border2 = legend2Canvas.append("rect")
 		.attr("stroke-width", 3)
 		.attr("stroke", "black"); 
 
+// load in all channel data
+var q1 = queue()
+	.defer(d3.csv, "Data/channels/Ned1.csv")
+	.defer(d3.csv, "Data/channels/Ned2.csv")
+	.defer(d3.csv, "Data/channels/Ned3.csv")
+	.defer(d3.csv, "Data/channels/RTL4.csv")
+	.defer(d3.csv, "Data/channels/SBS 6.csv")
+	.defer(d3.csv, "Data/channels/NICK.csv")
+	.defer(d3.csv, "Data/channels/Tien.csv")
+	.defer(d3.csv, "Data/channels/Ver.csv")
+	.defer(d3.csv, "Data/channels/YRN.csv");
+
 // makes line graph for channel data
-d3.csv("Data/channels/Ned1.csv", function(channelData) {
+q1.awaitAll(function(error, files) {
+
+	// convert string to int 
+	files.forEach(function(files) {
+		files[0].Jaar = +files[0].Jaar;
+		files[0].Aantal = +files[0].Aantal;
+	});
 
 	// determine scaling
 	var xScale = d3.scale.linear()
-				.domain(d3.extent(channelData, function(d) { return d.Jaar; }))	
+				.domain(d3.extent(files[0], function(files) { return files.Jaar; }))	
 				.range([margin1.left, width1-margin1.right]); 
 
 	var yScale = d3.scale.linear()
 				.domain([0, 50])
-				.range([height1-margin1.top, margin1.bottom])
+				.range([height1-margin1.top, margin1.bottom]);
+
+	var line = d3.svg.line()
+			.x(function(files) {return xScale(files.Jaar);})
+			.y(function(files) {return yScale(files.Aantal);});
+	
+	// draw lines of all data files
+	var lines1 = canvas1.selectAll("path")
+		.data(files)
+		.enter()
+		.append("path")
+		.attr("d", line)
+		.attr("fill", "none")
+		.attr("stroke-width", "2")
+		.attr("stroke", function(d, i) { return colors[i] })
 
 	// make and scale axes
 	var xAxis = d3.svg.axis()
-				.ticks(11)
 				.tickFormat(d3.format("d")) // remove commas
 				.scale(xScale);
 
@@ -137,25 +168,62 @@ d3.csv("Data/channels/Ned1.csv", function(channelData) {
 			.call(yAxis)
 			.attr("transform", "translate(" + margin1.left + ", 0)");
 
-	// draw line through data
-	var line = d3.svg.line()
-			.x(function(d) {return xScale(d.Jaar);})
-			.y(function(d) {return yScale(d.Aantal);});
+	var timeout; 
 
-	canvas1.append("path")
-		.datum(channelData)
-    	.attr("d", line)
-    	.attr("fill", "none")
-    	.attr("stroke", "red");
+	// make info box appear on mouse mouve 
+	canvas1.on("mousemove", function(){
+		mouse = d3.mouse(this);
 
-  	});
+		// wait a while before drawing infobox
+		timeout = setTimeout(function(){
+			timeout = 0;
+	
+			if (mouse[0] > 0 & mouse[0] < (width1 - margin1.right)) {
+
+				// remove previous infobox
+				canvas1.select("#info1rect").remove();
+				canvas1.select("#info1text").remove();
+
+				var infoX = Math.round(xScale.invert(mouse[0]));
+
+				canvas1.append("rect")
+					.attr("width", 75)
+					.attr("height", 50)
+			    	.attr("fill", "#E0E0E0")
+			    	.attr("x", mouse[0] + 15)
+			    	.attr("y", mouse[1])
+			    	.attr("id", "info1rect")
+
+			    canvas1.append("text")
+			    	.text(infoX)
+			    	.attr("x", mouse[0] + 30)
+			    	.attr("y", mouse[1] + 30)
+			    	.attr("id", "info1text")
+				}
+
+			}, 1);
+		})
+
+ 
+	// make lines appear or dissapear when clicked on corresponding part in legend 1
+	// code taken from http://code.tutsplus.com/tutorials/building-a-multi-line-chart-using-d3js-part-2--cms-22973 
+	buttons1.on("click", function(d, i) {
+		var active = files.active ? false : true;
+		var opacity = active ? 0 : 1;
+
+		canvas1.select("path:nth-child(" + (i + 2) + ")") // first two children of path are the axes
+			.style("opacity", opacity) 
+
+		files.active = active
+});
+
+	});
 
 // makes date object from string 
 
 var toDate = d3.time.format("%d-%m-%Y").parse;
 var jan1 = new Date('December 31, 2012 GMT');
 var dec31 = new Date('December 31, 2013 GMT')
-
 
 d3.csv("Data/years/2013.csv", function(yearData) {
 
@@ -197,6 +265,7 @@ d3.csv("Data/years/2013.csv", function(yearData) {
 	canvas2.append("g")
 		.call(yAxis)
 		.attr("transform", "translate(" + margin1.left + ", 0)");
+
 	canvas2.selectAll("circle")
 			.data(yearData)
 			.enter()
