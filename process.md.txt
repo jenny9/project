@@ -1,4 +1,4 @@
-proces 
+﻿proces 
 
 #5/1 
 Besloten om categorieën niet meer te doen. Blijken niet in de dataset te staan en met de hand toevoegen is te veel werk. Nog nadenken over wat het gaat vervangen. 
@@ -16,3 +16,12 @@ Alvast onderzoek gedaan naar het maken van knoppen van de ticks (om de jaargrafi
 #8/1
 Presentatie gehouden en design document gemaakt. Er moeten nog een aantal belangrijke dingen gebeuren. Sommige dingen werken wel maar zijn niet zo netjes, bijv het maken van een heel nieuw svg element ipv een g element. Alle data moet in één functie worden geladen, of moet het een variabele zijn? Misschien moet het hele programma binnen de functie staan die de data laadt. Waar ik ook over twijfel is of het wel slim is om 1 csv file te hebben per zender en 1 per jaar. Misschien moet dat allemaal bij elkaar in 2 csv's ? Ga ik maandag overleggen. 
 Nog geen oplossing voor overlappende data. Ga ik mee werken als de rest het doet. Leuke ideeën gekregen nav presentatie: nieuwsevents toevoegen of iets met best bekeken programma's aller tijden.
+
+#9/1 
+Aantal slordigheden verbeterd. Besloten om queue.js te gebruiken voor inladen data. Nu worden alle lijnen weergegeven en kun je ze aan en uitzetten door op knoppen te klikken. Besloten om lijnen weer te geven/weg te halen door alleen opacity aan te passen. Ook mouseover gemaakt voor grafiek 1. Deze geeft nu alleen nog het jaar weer. 
+
+#10/1
+Besloten om niet van de ticks knoppen te maken, dat is slordig/onhandig. Knoppen staan nu los rechts van grafiek 2. Ik gebruik nu ook de library d3-tip om makkelijk mouseover-informatie te geven in grafiek 2. Die informatie klopt nu maar het is alleen nog een tekstobject. Moet nog kijken of je hier een rect achter kan maken oid of dat ik iets anders moet proberen.
+Alle jaargrafieken kunnen nu worden weergegeven door op knoppen te klikken. Deze knop wordt geel als de corresponderende grafiek weergegeven wordt. 
+Nu wordt nog de kleur van alle knoppen weer grijs gemaakt als er een nieuwe knop wordt aangeklikt. Misschien is het beter om de gele te zoeken en die grijs te maken ? Ik weet niet wat sneller is.
+Ook een array gemaakt die bijhoudt of een grafiek al eerder is weergegeven of niet. Anders wordt data dubbel ingeladen en dat geeft error. 
