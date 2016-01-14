@@ -1,3 +1,17 @@
 body {
   font-family: "Arial", Arial, sans-serif;
 }
+
+	.tooltip {
+  		background-color: #E1E1E1;
+  		border-color: black;
+  		border-width: 2px;
+  		border-style: solid;
+		}
+
+	#info1text{
+		background-color: white;
+  		border-color: black;
+  		border-width: 2px;
+  		border-style: solid;
+		}

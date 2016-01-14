@@ -116,6 +116,9 @@ q1.awaitAll(function(error, files) {
 		.attr("stroke-width", "2")
 		.attr("stroke", function(d, i) { return colors[i] });
 
+	// make array to remember which lines are drawn 
+	var displayedChannels = [1, 1, 1, 1, 1, 1, 1, 1, 1];
+
 	// make and scale axes
 	var xAxis = d3.svg.axis()
 		.tickFormat(d3.format("d")) // remove commas
@@ -145,34 +148,41 @@ q1.awaitAll(function(error, files) {
 		timeout = setTimeout(function(){
 			timeout = clearTimeout;
 	
-			if (mouse[0] > margin1.left & mouse[0] < (width1 - margin1.right) & mouse[1] < height1-margin1.bottom & mouse[1] > margin1.top) {
+			if (mouse[0] > margin1.left & mouse[0] < (width1 - margin1.right)) {
 				// remove previous infobox
-				canvas1.select("#info1rect").remove();
-				canvas1.select("#info1text").remove();
+				d3.select("#info1text").remove();
+				d3.select("#info1line").remove();
 
-				var infoX = Math.round(xScale.invert(mouse[0]));
+				var year = Math.round(xScale.invert(mouse[0]));
+				var j = year - 2002;
 
-				canvas1.append("rect")
-					.attr("width", 75)
-					.attr("height", 50)
-			    	.attr("fill", "white")
-			    	.attr("stroke-width", 2)
-			    	.attr("stroke", "black")
-			    	.attr("x", mouse[0] + 15)
-			    	.attr("y", mouse[1])
-			    	.attr("id", "info1rect")
+				// draw vertical line
+				var verticalLine = canvas1.append("line")
+					.attr("x1", xScale(year))
+					.attr("y1", margin1.top)
+					.attr("x2", xScale(year))
+					.attr("y2", height1 - margin1.bottom)
+					.attr("stroke-width", 2)
+					.attr("stroke", "white")
+					.attr("id", "info1line");
 
-			    canvas1.append("text")
-			    	.text(infoX)
-			    	.attr("x", mouse[0] + 30)
-			    	.attr("y", mouse[1] + 30)
-			    	.attr("id", "info1text")
-				}
+				var infoText = ["<u>" + year + "</u>"]
+				
+				// add info of displayed channels to infobox
+				for (var i = 0; i < channels.length; i++) {
 
-			else {
-				// remove previous infobox
-				canvas1.select("#info1rect").remove();
-				canvas1.select("#info1text").remove();
+					if (displayedChannels[i] == 1){
+						infoText.push(channels[i] + " " + "<b>" + files[i][j].Aantal + "</b>");
+					};
+				};
+
+			    var info = d3.select("body").append("div")
+			    	.html(infoText.join("<br>"))
+			    	.style("position", "absolute")
+			    	.style("left", xScale(year) + 100 + "px")
+			    	.style("top", (height1 / 3) + "px")
+			    	.style("opacity", 0.8)
+			    	.attr("id", "info1text");
 				}
 
 			}, 50);
@@ -180,15 +190,24 @@ q1.awaitAll(function(error, files) {
 
  
 	// toggle opacity of lines in legend 1 on click
-	// code taken from http://code.tutsplus.com/tutorials/building-a-multi-line-chart-using-d3js-part-2--cms-22973 
+	var opacity; 
+
 	legend1Colors.on("click", function(d, i) {
-		var active = files.active ? false : true;
-		var opacity = active ? 0 : 1;
+		if (displayedChannels[i] == 1) {
+			opacity = 0;
+		}
+
+		else {
+			opacity = 1;
+		}
 
 		canvas1.select("path:nth-child(" + (i + 3) + ")") // first two children of path are the axes, third is the background
 			.style("opacity", opacity);
 
-		files.active = active;
+		// remember line is not displayed
+		displayedChannels[i] = displayedChannels[i] * -1;
+
+
 		});
 
 	});
@@ -322,9 +341,9 @@ q1.awaitAll(function(error, files) {
 		// make informaton box to show on mouse over	
 		var tip = d3.tip()
 			.html(function(d){ 
-				return d.Title + "<br>" + formatDate(d.Date) + 
+				return "<div class='tooltip'>" + d.Title + "<br>" + formatDate(d.Date) + 
 				"<br>" + d.Time + "<br>" + d.Channel + "<br>" + 
-				d.Viewers + " viewers" }); 
+				d.Viewers + " viewers</div>" }); 
 
 		canvas2.call(tip);
 
