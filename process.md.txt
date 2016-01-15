@@ -25,3 +25,20 @@ Besloten om niet van de ticks knoppen te maken, dat is slordig/onhandig. Knoppen
 Alle jaargrafieken kunnen nu worden weergegeven door op knoppen te klikken. Deze knop wordt geel als de corresponderende grafiek weergegeven wordt. 
 Nu wordt nog de kleur van alle knoppen weer grijs gemaakt als er een nieuwe knop wordt aangeklikt. Misschien is het beter om de gele te zoeken en die grijs te maken ? Ik weet niet wat sneller is.
 Ook een array gemaakt die bijhoudt of een grafiek al eerder is weergegeven of niet. Anders wordt data dubbel ingeladen en dat geeft error. 
+
+#11/1
+Vandaag de mouse over voor grafiek 1 afgemaakt. Het lukte niet in een rect dus ik heb er een div van gemaakt. De tekst in de mouse over verandert mee als je lijnen aan of uit zet. 
+Een bug gefixt bij het lijnen aan en uit zetten: de data kan niet twee keer ingeladen worden. Daarom een array gemaakt om bij te houden of de data al eens ingeladen is of niet. Het is een array van enen die steeds bij het aan en uitzetten *-1 wordt gedaan om een toggle effect te creeëren. 
+
+#12/1 
+Vandaag grafiek 2 gemaakt. Je kunt nu op knoppen klikken om de top 50 per jaar te zien. Hiervoor moet steeds het domein van de x-as opnieuw worden berekend, omdat de data-elementen ook een jaar hebben. Het domein moet dus voor de data van 2002 lopen van 1 jan 2002 tot 31 dec 2002. Het is niet mogelijk om het jaar er af te knippen en gewoon 1 jan tot 31 dec te nemen.  
+
+#13/1
+Vandaag de mouse over voor grafiek 2 gemaakt. Dat doe ik met een library: d3.tip. Hiermee is de code heel kort.
+
+#14/1
+Vandaag de kleuren van grafiek 2 gemaakt: je kunt nu op Channel en Time klikken om de cirkels volgens die data te kleuren. In plaats van Category heb ik gekozen voor Day (of the week). Er staan geen categorieën in mijn gescrapete data en die zijn ook niet makkelijk te vinden. Het is te veel werk dat met de hand te doen. Dag van de week is wel makkelijk te vinden adhv de datum en voegt ook nog wat toe. 
+
+#15/1
+Vandaag de legenda's gemaakt voor bij grafiek 2. Ze worden nu steeds helemaal opnieuw getekend, ik ga kijken of dat efficiënter kan. Ook de lijnen van publiek vs commercieel gemaakt. Die data wordt nu ook nog best inefficiënt gemaakt. Ik weet nog niet of ik dat kan verbeteren. Het is nu nogal gehardcode maar het verschil tussen publiek en commercieel moet je ook wel hardcoden. 
+Heb het vermoeden dat library d3.tip heel langzaam is. Bij pagina laden moet hij nl erg lang wachten op die site. Ik ga kijken of ik het zelf ook kan maken.
