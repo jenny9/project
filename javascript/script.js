@@ -24,6 +24,7 @@ var years = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '20
 // button options in graph 2 
 var buttonOptions = ['Channel', 'Time', 'Day']
 var lineOptions = ['Groups', 'All']
+var optionText = ['Public', 'Commercial']
 
 // color schemes
 // colors generated with colorbrewer.org
@@ -54,57 +55,65 @@ var legend1 = canvas1.append("g")
 	.attr("width", legend1Width)
 	.attr("transform", "translate(" + (width1 - margin1.right + legendMargin) + ", 5)");
 
-// add color blocks to legend1
-var legend1Colors = legend1.selectAll("rect")
-	.data(channels)
-	.enter()
-		.append("rect")
-			.attr("height", 20)
-			.attr("width", 30)
-			.attr("x", 75)
-			.attr("y", function(d, i) { return legend1Height / 10 * (i + 1) - 15; })
-			.attr("fill", function(d, i) { return colors[i]})
-			.attr("class", "buttonText");
-
-// add legend1Text to legend1
-var legend1Text = legend1.selectAll("text")
-	.data(channels)
-	.enter()
-		.append("text")
-			.attr("x", 25)
-			.attr("y", function(d, i) { return legend1Height / 10 * (i + 1); })
-			.text(function(d) { return d });
+var legend1Colors;
+var legend1Text;
+var lineRects;
+var textLineButtons;
 
 // add line buttons to legend1
 var lineButtons = legend1.selectAll("rect.line")
-	.data(lineOptions)
-	.enter()
-		.append("g")
-		.attr("transform", function(d, i) { return "translate(" + (i * (legend1Width / 2 + 3)) + "," + (legend1Height + 10) + ")" });
+		.data(lineOptions)
+		.enter()
+			.append("g")
+			.attr("transform", function(d, i) { return "translate(" + (i * (legend1Width / 2 + 3)) + "," + (legend1Height + 10) + ")" });
 
-
-var lineRects = lineButtons.append("rect")
-				.attr("width", legend1Width / 2 - 3)
-				.attr("height", 40)
-				.attr("fill", "white")
-				.attr("stroke-width", 3)
-				.attr("stroke", "black")
+function makeLegendA(data, colorArray) {
+	// add color blocks to legend1
+	legend1Colors = legend1.selectAll("rect")
+		.data(data)
+		.enter()
+			.append("rect")
+				.attr("height", 20)
+				.attr("width", 30)
+				.attr("x", 90)
+				.attr("y", function(d, i) { return legend1Height / 10 * (i + 1) - 15; })
+				.attr("fill", function(d, i) { return colorArray[i]})
 				.attr("class", "buttonText")
 
-// add text to buttons
-var textLineButtons = lineButtons.append("text")
-	.text(function(d) { return d })
-	.attr("x", 3)
-	.attr("y", 25)
-	.attr("class", "buttonText");
+	// add legend1Text to legend1
+	legend1Text = legend1.selectAll("text")
+		.data(data)
+		.enter()
+			.append("text")
+				.attr("x", 5)
+				.attr("y", function(d, i) { return legend1Height / 10 * (i + 1); })
+				.text(function(d) { return d });
 
-// make border around legend1
-var border1 = legend1.append("rect")
+
+	lineRects = lineButtons.append("rect")
+					.attr("width", legend1Width / 2 - 3)
+					.attr("height", 40)
+					.attr("fill", "white")
+					.attr("stroke-width", 3)
+					.attr("stroke", "black")
+
+	// add text to buttons
+	textLineButtons = lineButtons.append("text")
+		.text(function(d) { return d })
+		.attr("x", 3)
+		.attr("y", 25)
+		.attr("class", "buttonText");
+	
+	// make border around legend1
+	var border1 = legend1.append("rect")
 	.attr("height", legend1Height)
 	.attr("width", legend1Width)
 	.attr("fill", "none")
 	.attr("stroke-width", 3)
 	.attr("stroke", "black");
+	};
+
+makeLegendA(channels, colors); 
 
 
 // load in all channel data
@@ -145,7 +154,7 @@ q1.awaitAll(function(error, files) {
 		.y(function(summedFiles) {return yScale(summedFiles[1])})
 	
 	// draw lines of all data files
-	function allLines(){
+	function allLines(files, line, colors){
 		 canvas1.selectAll("path.data")
 			.data(files)
 			.enter()
@@ -158,8 +167,7 @@ q1.awaitAll(function(error, files) {
 			.attr("id", function(d, i) { return "line" + i });
 		};
 
-
-	allLines();
+	allLines(files, line, colors);
 
 	// sum data to display commercial and public
 	var pub = []
@@ -179,7 +187,6 @@ q1.awaitAll(function(error, files) {
 	});
 
 	var summedFiles = [pub, com];
-	console.log(summedFiles)
 
 	// make array to remember which lines are drawn 
 	var displayedChannels = [1, 1, 1, 1, 1, 1, 1, 1, 1];
@@ -205,6 +212,9 @@ q1.awaitAll(function(error, files) {
 
 	var timeout; 
 	var mouse; 
+	var options = 1; 
+
+
 	// make info box appear on mouse mouve 
 	canvas1.on("mousemove", function(){
 		mouse = d3.mouse(this);
@@ -232,14 +242,28 @@ q1.awaitAll(function(error, files) {
 					.attr("id", "info1line");
 
 				var infoText = ["<u>" + year + "</u>"]
-				
+					
 				// add info of displayed channels to infobox
-				for (var i = 0; i < channels.length; i++) {
 
-					if (displayedChannels[i] == 1){
-						infoText.push(channels[i] + " " + "<b>" + files[i][j].Aantal + "</b>");
-					};
-				};
+				// if all lines are displayed
+				if (options == 1) {	
+					for (var i = 0; i < channels.length; i++) {
+
+						if (displayedChannels[i] == 1){
+							infoText.push(channels[i] + " " + "<b>" + files[i][j].Aantal + "</b>");
+							};
+						};
+					}
+
+				else {
+					for (var i = 0; i < optionText.length; i++) {
+
+						if (displayedChannels[i] == 1){
+							infoText.push(optionText[i] + " " + "<b>" + summedFiles[i][j][1] + "</b>")
+							}
+						}
+				}
+
 
 			    var info = d3.select("body").append("div")
 			    	.html(infoText.join("<br>"))
@@ -254,7 +278,30 @@ q1.awaitAll(function(error, files) {
 			}, 50);
 		});
 
- 
+
+	lineButtons.on("click", function(d, i) {
+		if (i == 0){
+			canvas1.selectAll(".dataline").remove();
+			d3.selectAll("#info1text").remove();
+			legend1.selectAll("rect").remove();
+			legend1.selectAll("text").remove();
+
+			allLines(summedFiles, line2, summedColors);
+			makeLegendA(optionText, summedColors);
+			options = 0;
+			}
+		
+		else if (i == 1){
+			legend1.selectAll("rect").remove();
+			legend1.selectAll("text").remove();
+			d3.selectAll(".dataline").remove();
+
+			allLines(files, line, colors);
+			makeLegendA(channels, colors);
+			options = 1;
+			}
+		})
+
 	// toggle opacity of lines in legend 1 on click
 	var opacity; 
 
@@ -273,30 +320,6 @@ q1.awaitAll(function(error, files) {
 		// remember line is not displayed
 		displayedChannels[i] = displayedChannels[i] * -1;
 		});
-
-	lineButtons.on("click", function(d, j) {
-		if (j == 0){
-			d3.selectAll(".dataline").remove();
-			d3.select("#info1text").remove();
-
-		 	canvas1.selectAll("path.data")
-				.data(summedFiles)
-				.enter()
-				.append("path")
-					.attr("d", line2)
-					.attr("class", "dataline2")
-					.attr("fill", "none")
-					.attr("stroke-width", "3")
-					.attr("stroke", function(d, i) { return summedColors[i] })
-					.attr("id", function(d, i) { return "line" + i })
-			}
-		else if (j == 1){
-
-			d3.selectAll(".dataline2").remove();
-			allLines();
-
-			}
-		})
 	});
 
 // make svg canvas for year graph
@@ -380,6 +403,7 @@ var textYearButtons = yearButtonGroup.append("text")
 	.attr("y", buttonHeight * 0.6)
 	.attr("class", "buttonText");
 
+var buttonPressed = -1; 
 
 // load in all year data
 var q1 = queue()
@@ -457,6 +481,7 @@ q1.awaitAll(function(error, files) {
 	var circles; 
 
 	yearButtonGroup.on("click", function(d, i) {
+
 		// remove previous displayed graph
 		canvas2.selectAll("circle").remove();
 		
@@ -499,7 +524,13 @@ q1.awaitAll(function(error, files) {
 					.on("mouseout", tip.hide)
 					.attr("class", "circle");
 
-		buttonGroup.on("click", function(d, j) {
+				if (buttonPressed != -1) {
+			colorCircles(d, buttonPressed)
+		}
+
+		buttonGroup.on("click", colorCircles);
+
+		function colorCircles (d, j) {
 			// if button 'Channel' is clicked
 			if (j == 0) {
 
@@ -531,7 +562,9 @@ q1.awaitAll(function(error, files) {
 						.attr("class", "buttonText")
 						.attr("class", "legend2")
 
+				buttonPressed = 0;
 				}
+
 			// if button 'Time' is clicked
 			else if (j == 1) {
 
@@ -574,6 +607,8 @@ q1.awaitAll(function(error, files) {
 						})
 					.attr("class", "buttonText")
 					.attr("class", "legend2")
+
+				buttonPressed = 1;
 				}
 			// if button 'Day' is clicked
 			else if (j == 2) {
@@ -588,7 +623,6 @@ q1.awaitAll(function(error, files) {
 					color = +color;
 					return weekdayColors[color];
 					});
-
 
 				var legend2 = legend2box.selectAll("rect.info")
 					.data(weekdayColors)
@@ -614,8 +648,10 @@ q1.awaitAll(function(error, files) {
 						.attr("class", "buttonText")
 						.attr("class", "legend2")
 
+				buttonPressed = 2;
+
 				}
-			});
+			};
 
 		});
 	});
