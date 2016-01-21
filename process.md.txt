@@ -42,3 +42,13 @@ Vandaag de kleuren van grafiek 2 gemaakt: je kunt nu op Channel en Time klikken 
 #15/1
 Vandaag de legenda's gemaakt voor bij grafiek 2. Ze worden nu steeds helemaal opnieuw getekend, ik ga kijken of dat efficiënter kan. Ook de lijnen van publiek vs commercieel gemaakt. Die data wordt nu ook nog best inefficiënt gemaakt. Ik weet nog niet of ik dat kan verbeteren. Het is nu nogal gehardcode maar het verschil tussen publiek en commercieel moet je ook wel hardcoden. 
 Heb het vermoeden dat library d3.tip heel langzaam is. Bij pagina laden moet hij nl erg lang wachten op die site. Ik ga kijken of ik het zelf ook kan maken.
+
+#18/1
+Vandaag de commercieel vs publiek-lijnen afgemaakt. Ook de legenda en mouse over infobox worden aangepast als deze optie wordt aangeklikt. Probleem is nu dat het aan en uitklikken van lijnen dan niet meer werkt. Uiteindelijk opgelost door de on click functie aan te roepen in de functie die de legena tekent en niet erna. 
+
+#19/1
+Vandaag de twee grafieken aan elkaar gekoppeld. De mouse over op de eerste grafiek roept nu de tweede grafiek op. Hiervoor moest ik mijn hele programma omschrijven, omdat de data eerst in twee verschillende functies werd ingeladen. Nu moest het in één functie. Ook een transitie gemaakt voor het plaatsen van de bolletjes van grafiek 2. De transitie is alleen nog wel heel langzaam, ik weet niet waarom.
+
+#20/1 
+De transitie was langzaam vanwege de mouseover functie. Elke keer als de muis bewoog begon de transitie opnieuw. Nu een extra check gemaakt dat de transitie alleen begint als de muis op een ander jaar gaat staan. Ook de knoppen efficiënter gekleurd en ontkleurd op klik. Ipv selecteren op id, gewoon de kinderen van het this element gebruikt. Dit kan alleen niet met de jaarknoppen, omdat die ook door de eerste grafiek moeten worden aangeroepen.
+Begonnen met de zoomfunctie voor grafiek 2. Dit is nog heel lastig, het werkt nu nog niet omdat ik mijn svg's raar heb ingedeeld. Dit moet dus eerst gefixt worden. 

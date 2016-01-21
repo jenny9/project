@@ -4,6 +4,7 @@ body {
   
   .buttonText {
     cursor: pointer;
+    -moz-user-select: none;
   }
 	.tooltip {
   		background-color: white;
