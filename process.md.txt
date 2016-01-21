@@ -52,3 +52,7 @@ Vandaag de twee grafieken aan elkaar gekoppeld. De mouse over op de eerste grafi
 #20/1 
 De transitie was langzaam vanwege de mouseover functie. Elke keer als de muis bewoog begon de transitie opnieuw. Nu een extra check gemaakt dat de transitie alleen begint als de muis op een ander jaar gaat staan. Ook de knoppen efficiënter gekleurd en ontkleurd op klik. Ipv selecteren op id, gewoon de kinderen van het this element gebruikt. Dit kan alleen niet met de jaarknoppen, omdat die ook door de eerste grafiek moeten worden aangeroepen.
 Begonnen met de zoomfunctie voor grafiek 2. Dit is nog heel lastig, het werkt nu nog niet omdat ik mijn svg's raar heb ingedeeld. Dit moet dus eerst gefixt worden. 
+
+#21/1
+Zoomfunctie werkt inmiddels wel. Ik heb besloten alleen een verticale zoom toe te passen. De zoom is nl uitsluitend om de overlappende bolletjes individueel te kunnen zien. Alleen verticale zoom is overzichtelijker. 
+De zoom werkt alleen nog wel raar: hij volgt niet de cursor maar gaat juist de andere kant op.

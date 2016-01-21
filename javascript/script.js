@@ -1,14 +1,18 @@
 'use strict'
 // size of graph canvas and legends
 var margin1 = {top: 25, left: 25, right: 500, bottom: 25};
+var margin2 = {right: 30}
 var width1 = 1500;
 var height1 = 350;
+
+var width2 = 200;
+var width3 = 1010;
 
 var buttonHeight = 30;
 var buttonWidth = 80;
 
 var legendMargin = 20;
-var legend1Width = margin1.right * 0.25;
+var legend1Width = 160;
 var legend1Height = height1 - margin1.bottom - margin1.top - buttonHeight;
 var legend2Width = buttonWidth + 20; 
 var legend2Height = height1 / 2 - 10;
@@ -42,11 +46,10 @@ var canvas1 = d3.select("body")
 	.attr("width", width1)
 	.attr("height", height1)
 	.append("g")
-	.attr("transform", "translate(40, 0)");
 
 // make background for svg canvas
 var background1 = canvas1.append("rect")
-	.attr("width", width1 - margin1.right - margin1.left)
+	.attr("width", width1)
 	.attr("height", height1 - margin1.bottom - margin1.top)
 	.attr("fill", "white")
 	.attr("transform", "translate(" + margin1.left + "," + margin1.top + ")");
@@ -55,7 +58,7 @@ var background1 = canvas1.append("rect")
 var legend1 = canvas1.append("g")
 	.attr("height", legend1Height)
 	.attr("width", legend1Width)
-	.attr("transform", "translate(" + (width1 - margin1.right + legendMargin) + ", 5)");
+	.attr("transform", "translate(0, 20)");
 
 var colorButtonGroup = legend1.append("g")
 
@@ -130,7 +133,7 @@ function makeLegendA(data, colorArray) {
 		.append("rect")
 			.attr("height", 20)
 			.attr("width", 30)
-			.attr("x", 90)
+			.attr("x", 120)
 			.attr("y", function(d, i) { return legend1Height / 10 * (i + 1) - 15; })
 	
 	legend1Colors.attr("fill", function(d, i) { return colorArray[i]})
@@ -145,7 +148,7 @@ function makeLegendA(data, colorArray) {
 
 	legend1Text.enter()
 		.append("text")
-			.attr("x", 5)
+			.attr("x", 15)
 			.attr("y", function(d, i) { return legend1Height / 10 * (i + 1); })
 
 	legend1Text.text(function(d) { return d });
@@ -153,54 +156,17 @@ function makeLegendA(data, colorArray) {
 
 makeLegendA(channels, colors); 
 	
-var circles; 
-
-function domain(i) {
-	var jan1 = new Date("December 31," + (i + 2001) + " GMT");
-	var dec31 = new Date("December 31," + (i + 2002) + " GMT");
-	return [jan1, dec31];
-	};
-
-var x = d3.scale.linear()
-   	.domain([margin1.left, width1 - margin1.right])
-   	.range([margin1.left, width1 - margin1.right]);
-
-var y = d3.scale.linear()
-   	.domain([height1, 2 * height1])
-   	.range([height1, 2 * height1]);
-
-// draw x axis for this year
-var xScale2 = d3.time.scale()
-	.domain(domain(0))	
-	.range([margin1.left, width1-margin1.right]); 
-
-var yScale2 = d3.scale.linear()
-	.domain([0, 9000000])
-	.range([-margin1.bottom, -height1+margin1.top]);
-
-
-// make svg canvas for year graph
+// make svg canvas for year graph legend
 var canvas2 = d3.select("body")
 	.append("svg")
-		.attr("width", width1)
-		.call(d3.behavior.zoom().x(xScale2).y(yScale2).scaleExtent([1, 40]).on("zoom", zoom))
+		.attr("width", width2)
 		.attr("height", height1)
 			.append("g")
-				.attr("transform", "translate(40," + height1 + ")");
-
-	function zoom() {
- 		 circles.attr("transform", transform);
-		}
-
-	function transform(d, i) {
-  		return "translate(" + xScale2(d.Date) + "," + yScale2(d.Viewers) + ")";
-		}
 
 // make group for legend2box
 var legend2box = canvas2.append("g")
 	.attr("height", height1)
 	.attr("width", legend2Width)
-	.attr("transform", "translate(" + (width1 - margin1.right + legendMargin) + "," + (-height1 + 3) + ")");
 
 // make group element for all buttons of legend2box
 var buttonGroup = legend2box.selectAll("g")
@@ -245,7 +211,7 @@ var border2b = legend2box.append("rect")
 var chooseYear = canvas2.append("g")
 	.attr("height", 100)
 	.attr("width", 100)
-	.attr("transform", "translate(" + (width1 - margin1.right + legendMargin + legend2Width) + "," + (-height1 + 2) + ")");
+	.attr("transform", "translate(100, 0)");
 
 // make group for all year buttons 
 var yearButtonGroup = chooseYear.selectAll("g")
@@ -323,7 +289,7 @@ q1.awaitAll(function(error, files) {
 	// determine scaling
 	var xScale = d3.scale.linear()
 		.domain(d3.extent(channelFiles[0], function(channelFiles) { return channelFiles.Jaar; }))	
-		.range([margin1.left, width1-margin1.right]); 
+		.range([legend2Width + 150, width3 + 200]); 
 
 	var yScale = d3.scale.linear()
 		.domain([0, 50])
@@ -400,19 +366,17 @@ q1.awaitAll(function(error, files) {
 	
 	canvas1.append("g")
 		.call(yAxis)
-		.attr("transform", "translate(" + margin1.left + ", 0)");
+		.attr("transform", "translate(250, 0)");
 
 	var timeout; 
 	var mouse; 
 	var options = 1; 
 	var currentYear;
 
-
 	// make info box appear on mouse mouve 
 	canvas1.on("mousemove", function(){
 		mouse = d3.mouse(this);
-	
-		if (mouse[0] > margin1.left & mouse[0] < (width1 - margin1.right)) {
+		if (mouse[0] > 230 & mouse[0] < width1 - legend1Width - 150) {
 			// remove previous infobox
 			d3.select("#info1text").remove();
 			d3.select("#info1line").remove();
@@ -498,21 +462,51 @@ q1.awaitAll(function(error, files) {
 		
 	// abbrevate millions, taken from source 1
 	var formatValue = d3.format(".2s");
-	 	
+	 
+	var circles; 
+
+	function zoom() {
+ 		circles.attr("transform", transform)
+ 		canvas3.select(".yAxis").call(yAxis2);
+		}
+
+	function transform(d) {
+		//console.log(i)
+  		return "translate(" + x(xScale2(d.Date)) + "," + yScale2(d.Viewers) + ")";
+		}
+
 	// determine scaling 
 	var xScale2 = d3.time.scale()
 		.domain(domain(0))	
-		.range([margin1.left, width1-margin1.right]); 
+		.range([25, width3 - margin2.right])
 
 	var yScale2 = d3.scale.linear()
 		.domain([0, 9000000])
-		.range([-margin1.bottom, -height1+margin1.top]);
+		.range([-margin1.bottom, -height1+margin1.top])
+		//.clamp(true);
 
 
-	canvas2.append("rect")
-		.attr("width", width1)
+	var x = d3.scale.linear()
+   		.domain([margin1.left, width1 - margin1.right])
+   		.range([margin1.left, width1 - margin1.right]);
+
+	var zooming = d3.behavior.zoom();
+
+	// make canvas for graph 2 
+	var canvas3 = d3.select("body").append("svg")
+		.attr("width", width3)
 		.attr("height", height1)
-		
+		.call(zooming.x(xScale2).y(yScale2).scaleExtent([1, 8]).on("zoom", zoom))
+		.append("g")
+			.attr("transform", "translate(20," + height1 + ")")
+
+	// function to determine first and last days of year
+	function domain(i) {
+	var jan1 = new Date("December 31," + (i + 2001) + " GMT");
+	var dec31 = new Date("December 31," + (i + 2002) + " GMT");
+	return [jan1, dec31];
+	};
+
 	// make axes
 	var xAxis2 = d3.svg.axis()
 		.ticks(d3.time.months)
@@ -523,15 +517,18 @@ q1.awaitAll(function(error, files) {
 		.ticks(10)
 		.tickFormat(function(d) {return formatValue (d)})
 		.orient("left")
-		.scale(yScale2);
+		.scale(yScale2)
 
 	// add axes to canvas
-	canvas2.append("g")
+	canvas3.append("g")
+		.attr("class", "xAxis")
 		.call(xAxis2)
-		.attr("transform", "translate(0, -" + margin1.bottom + ")");
-		canvas2.append("g")
+		.attr("transform", "translate(0,-25)");
+	
+	canvas3.append("g")
+		.attr("class", "yAxis")
 		.call(yAxis2)
-		.attr("transform", "translate(" + margin1.left + ", 0)");
+		.attr("transform", "translate(25,0)");
 
 	// prepare to alter date object
 	var formatDate = d3.time.format("%d-%m");
@@ -544,7 +541,7 @@ q1.awaitAll(function(error, files) {
 			+ formatDate(d.Date) + "<br>" + d.Time + "<br>" + d.Channel + "<br>" + 
 			d.Viewers + " viewers</div>" });
 
-	canvas2.call(tip);
+	canvas3.call(tip);
 
 	// make array to remember which year data is already loaded
 	var active = new Uint8Array(years.length);
@@ -560,6 +557,12 @@ q1.awaitAll(function(error, files) {
 	var maxTime = parseTime("2002-01-01-2359")
 
 	function displayYear(d, i) {
+
+		// reset zooming and axes
+		zooming.translate([0, 0]).scale(1)
+		canvas3.select(".xAxis").call(xAxis2)
+ 		canvas3.select(".yAxis").call(yAxis2);
+
 		// decolor buttons
 		yearButtons.style("fill", "#E1E1E1")
 
@@ -579,10 +582,13 @@ q1.awaitAll(function(error, files) {
 			// remember data is converted
 			active[i] = 1;
 		}
-			
 
-		// xScale2
-		circles = canvas2.selectAll("circle")
+		// determine scaling 
+		xScale2 = d3.time.scale()
+			.domain(domain(i))	
+			.range([25, width3 - margin2.right]); 
+			
+		circles = canvas3.selectAll("circle")
 			.data(yearFiles[i])
 		
 		circles.enter()
@@ -594,14 +600,10 @@ q1.awaitAll(function(error, files) {
 				.on("mouseover", tip.show)
 				.on("mouseout", tip.hide)
 				.attr("class", "circle")
-				.attr("cx", 500) 	// starting position given to enable transition  when clicked first time
-				.attr("cy", -200)
-    			.attr("transform", transform);
 
 		circles		
 			.transition().duration(500)
-			.attr("cy", function(d) {return yScale2(d.Viewers)})
-			.attr("cx", function(d) {return xScale2(d.Date)});
+    		.attr("transform", transform);
 
 		if (buttonPressed != -1) {
 			colorCircles(d, buttonPressed)
