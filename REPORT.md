@@ -79,6 +79,6 @@ De zoomfunctie stond niet in het oorspronkelijke plan, maar is toegevoegd om een
 
 ## Bronnen
 De gebruikte kleuren zijn gekozen met Colorbrewer.org. Voor de lijnen in grafiek 1 en de kleuring op basis van dag van de week en zender zijn kleuren voor kwalitatieve verschillen gebruikt. De kleuring op basis van tijd gebruikt kleuren voor sequentiële verschillen.
-D3.js is gebruikt als basis voor de visualisatie. Queue.js is gebruikt om de data in te laden. D3.tip is gebruikt om de tooltips van de tweede grafiek mee te maken. Tenslotte is voor de aankleding van de website Bootstrap gebruikt. 
+D3.js is gebruikt als basis voor de visualisatie. D3.queue is gebruikt om de data in te laden. D3.tip is gebruikt om de tooltips van de tweede grafiek mee te maken. Tenslotte is voor de aankleding van de website Bootstrap gebruikt. 
 
 De gebruikte data is verkregen op 05-01-2016 van www.kijkonderzoek.nl, uit de jaar top-100 lijsten: https://kijkonderzoek.nl/component/com_kijkcijfers/Itemid,133/file,j1-0-1-p 
