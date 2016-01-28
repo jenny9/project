@@ -6,8 +6,7 @@ var width1 = "100%";
 var height1 = 350;
 
 var width2 = "15%";
-var temp = "80%"
-var width3 = 1010;
+var width3 = "85%";
 
 var buttonHeight = 30;
 var buttonWidth = 80;
@@ -60,6 +59,7 @@ var svg1 = d3.select("body")
 var background1 = svg1.append("rect")
 	.attr("width", "90%")
 	.attr("height", height1 - margin1.bottom - margin1.top)
+	.attr("id", "background1")
 	.attr("fill", "white") 
 	.attr("transform", "translate(" + (legend1Width + margin1.left) + "," + margin1.top + ")");
 
@@ -185,10 +185,10 @@ makeLegendA(channels, colors);
 	
 // add x axis label graph 1
 svg1.append("text")
-	.attr("x", width2)
+	.attr("x", legend1Width + margin1.right + margin1.left + 30)
 	.attr("y", height1 + 15)
 	.attr("class", "axislabel")
-	.text("Jaar")
+	.text("Year")
 
 // add y axis label graph 1
 svg1.append("text")
@@ -196,13 +196,14 @@ svg1.append("text")
     .attr("transform", "rotate(-90)")
 	.attr("x", -325)
 	.attr("y", 265)
-	.text("Aantal uitzendingen in top 50")
+	.text("Number of broadcasts in top 50")
 
 // make svg svg for year graph legend
 var svg2 = d3.select("body")
 	.append("svg")
-		.attr("width", width2)
+		.attr("width", legend2Width + 2*(margin1.right + margin1.left))
 		.attr("height", height1)
+		.attr("id", "svg2")
 			.append("g")
 			.attr("transform", "translate(" + margin1.left + ", 0)")
 
@@ -407,10 +408,12 @@ q1.awaitAll(function(error, files) {
 	// add axes to svg
 	svg1.append("g")
 		.call(xAxis)
+		.attr("class", "axis")
 		.attr("transform", "translate(0, 325)")
 	
 	svg1.append("g")
 		.call(yAxis)
+		.attr("class", "axis")
 		.attr("transform", "translate(300, 0)");
 
 	var timeout; 
@@ -472,7 +475,7 @@ q1.awaitAll(function(error, files) {
 			   	.html(infoText.join("<br>"))
 			   	.style("position", "absolute")
 			   	.style("left", xScale(year) + xPos + "px")
-			   	.style("top", 600 + "px")
+			   	.style("top", 500 + "px")
 			   	.style("opacity", 0.8)
 			   	.attr("id", "info1text")
 			   	.attr("class", "buttonText");
@@ -511,15 +514,12 @@ q1.awaitAll(function(error, files) {
 		})
 	
 	var parseDate = d3.time.format("%d-%m-%Y").parse;
-		
-	// abbrevate millions, taken from source 1
-	var formatValue = d3.format(".2s");
 	 
 	var circles; 
 
 	function zoom() {
  		circles.attr("transform", transform)
- 		svg3.select(".yAxis").call(yAxis2);
+ 		svg3.select("#yAxis2").call(yAxis2);
 		}
 
 	function transform(d) {
@@ -529,11 +529,11 @@ q1.awaitAll(function(error, files) {
 	
 	// make svg for graph 2 
 	var svg3 = d3.select("body").append("svg")
-		.attr("width", temp)
+		.attr("width", width3)
 		.attr("height", height1)
 		.attr("id", "svg3")
 		.append("g")
-			.attr("transform", "translate(15," + (height1 - 15) + ")")
+			.attr("transform", "translate(25," + (height1 - 15) + ")")
 	
 	var trueWidth = parseInt(d3.select("#svg3").style("width"))
 	
@@ -554,22 +554,29 @@ q1.awaitAll(function(error, files) {
 	var zooming = d3.behavior.zoom();
 
 	// call zooming behavior
-	svg3.call(zooming.x(xScale2).y(yScale2).scaleExtent([1, 5]).center([-150, -110]).on("zoom", console.log("hoi")))
+	svg3.call(zooming.x(xScale2).y(yScale2).scaleExtent([1, 5]).center([-150, -110]).on("zoom", zoom))
+	
+	svg3.append("rect")
+		.attr("x", 10)
+		.attr("y", -height1)
+		.attr("width", 1500)
+		.attr("height", height1 + 70)
+		.attr("fill", "white")
 
 	// add x axis label graph 1
 	svg3.append("text")
 		.attr("x", 15)
 		.attr("y", 15)
 		.attr("class", "axislabel")
-		.text("Datum")
+		.text("Date")
 
 	// add y axis label graph 1
 	svg3.append("text")
 		.attr("class", "axislabel")
 	    .attr("transform", "rotate(-90)")
-		.attr("x", 20)
-		.attr("y", -35)
-		.text("Aantal kijkers")
+		.attr("x", 0)
+		.attr("y", -15)
+		.text("Number of viewers")
 
 	// function to determine first and last days of year
 	function domain(i) {
@@ -586,18 +593,20 @@ q1.awaitAll(function(error, files) {
 
 	var yAxis2 = d3.svg.axis()
 		.ticks(10)
-		.tickFormat(function(d) {return formatValue (d)})
+		.tickFormat(d3.format(".2s"))
 		.orient("left")
 		.scale(yScale2)
 
 	// add axes to svg
 	svg3.append("g")
-		.attr("class", "xAxis")
+		.attr("id", "xAxis2")
+		.attr("class", "axis")
 		.call(xAxis2)
 		.attr("transform", "translate(10," + -margin1.bottom + ")");
 	
 	svg3.append("g")
-		.attr("class", "yAxis")
+		.attr("id", "yAxis2")
+		.attr("class", "axis")
 		.call(yAxis2)
 		.attr("transform", "translate(" + (0.5 * margin1.left) + ",0)");
 
@@ -826,6 +835,7 @@ q1.awaitAll(function(error, files) {
 
 				}
 			};
+
 
 		};
 	});
