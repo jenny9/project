@@ -62,3 +62,9 @@ Tekst bij de assen geplaatst en begonnen met het variabel maken van de widths (d
 
 #26/1
 Begonnen met een bootstrap website maken om de visualisatie in te stoppen. Is lastig, ik weet niets van bootstap. Toch wel wat verder gekomen. Ook de widths kloppen nu (op de 2e grafiek na.. daar krijg ik steeds errors. Heeft met de volgorde van het programma te maken). Nu werkt alleen ineens een van de legenda's niet meer en ik snap niet waarom niet.. Alle code gecheckt maaar nog niets gevonden. 
+
+#27/1 
+Probleem met legenda opgelost, er stond een variabele op een verkeerde plek. Een eenvoudige site gemaakt met bootstrap, ik vind het goed zo. Ik krijg alleen de columns niet even lang. De width van de tweede grafiek ook aangepast, alles werkt nu weer. Begonnen aan het verslag.
+
+#28/1
+Verslag afgemaakt, alle code nog eens doorgelopen en site afgemaakt. Ook license etc gemaakt. 
