@@ -7,27 +7,27 @@ Programmeerproject
 Datavisualisatie   
 
 ##Beschrijving 
-![](Doc/product1.png)
+![](Doc/product1.PNG)
 De totale visualisatie ziet er als volgt uit. Als de gebruiker op de webpagina komt, is er één grafiek te zien. Dit is de grafiek van het aantal uitzendingen in de top 50 door de jaren heen (een lijngrafiek). 
 Bij binnenkomst op de webpagina is standaard de grafiek met de lijn van iedere zender te zien. Links naast de grafiek is een legenda. Hier staat een lijst van alle zenders die in ieder geval één keer met een uitzending in de top 50 zijn gekomen. In de legenda wordt verklaard welke kleur lijn bij welke zender hoort.
 De gebruiker kan op de kleuren van de zenders in de legenda klikken. De lijn wordt dan verborgen als hij is weergegeven, of juist weergegeven als hij nog niet zichtbaar was.
-![](Doc/product2.png)
+![](Doc/product2.PNG)
 Onder de legenda zijn twee knoppen zichtbaar: "Publiek vs. commercieel" en "Zenders individueel". Standaard is "Zenders individueel" aangeklikt. Hiermee wordt er voor elke zender een aparte lijn getekend.
 Als de gebruiker op "Publiek vs. commercieel" klikt, verdwijnen alle lijnen en verschijnen twee nieuwe lijnen. Deze bevatten respectievelijk de data van alle publieke omroepen (Ned1, Ned2, Ned3) opgeteld en die van alle commerciele omroepen (alle overige zenders). De legenda verandert dan; in plaats van een lijst met alle zenders worden hier nu alleen de twee kleuren van de publieke en commerciële lijnen verklaard.
-![](Doc/product3.png)
+![](Doc/product3.PNG)
 
 Als de gebruiker met de cursor over de grafiek beweegt, verschijnt er een informatiebox met daarin de informatie van het jaar waar de cursor op dat moment het dichtst bij is. In de informatiebox wordt het jaar en het aantal uitzendingen in de top 50 van elke zender die is weergegeven getoond. 
 Onder de eerste grafiek bevinden zich knoppen met de beschikbare jaartallen. Als de gebruiker op een van de knoppen klikt, verschijnt onder de lijngrafiek een andere grafiek. De assen van deze grafiek waren wel al weergegeven. Deze grafiek geeft de top 50 best bekeken tv-momenten van het desbetreffende jaar weer. Deze grafiek wordt ook opgeroepen door met de muis over de eerste grafiek te gaan.
-![](Doc/product4.png)
+![](Doc/product4.PNG)
 Alle datapunten worden gerepresenteerd als een cirkel. Als de gebruiker met zijn cursor in de cirkel komt, verschijnt een informatebox. 
 Hierin staat de volgende informatie weergegeven: titel, datum, tijd, zender, aantal kijkers. Als de gebruiker de cursor weer beweegt verdwijnt deze informatiebox. 
 Naast de tweede grafiek staan een aantal knoppen: Channel, Time en Day. Op het moment dat de gebruiker op één van deze knoppen klikt, worden de cirkels ingekleurd voor hun waarde bij de desbetreffende knop. Voor Channel en Day zijn dat losse kleuren, voor Time zijn het kleuren uit een kleurenschaal. Er verschijnt tevens een legenda die de gebruikte kleuren verklaart. Als de gebruiker nu een ander jaar selecteert, wordt het jaar direct met de laatst gebruikte kleuring weergegeven.
-![](Doc/product5.png)
-![](Doc/product6.png)
-![](Doc/product7.png)
+![](Doc/product5.PNG)
+![](Doc/product6.PNG)
+![](Doc/product7.PNG)
 
 Op de tweede grafiek kan door te scrollen worden ingezoomd. Dit is een semantic zoom, waardoor de cirkels uit elkaar bewegen bij het inzoomen. Hierdoor zijn ze beter te onderscheiden. 
-![](Doc/product8.png)
+![](Doc/product8.PNG)
 
 ##Design
 In de grafiek staan alle interactieve onderdelen van de visualisatie weergegeven - dus die waar de gebruiker invloed op heeft. Naast deze onderdelen zijn er natuurlijk de dingen die bij het laden van de pagina meteen worden aangemaakt en waar verder niets meer aan wordt veranderd.
