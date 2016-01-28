@@ -345,7 +345,6 @@ q1.awaitAll(function(error, files) {
 	var currentYear;
 	var currentButton;
 
-
 	// make info box appear on mouse mouve 
 	svg1.on("mousemove", function(){
 		mouse = d3.mouse(this);
@@ -399,7 +398,7 @@ q1.awaitAll(function(error, files) {
 			   	.html(infoText.join("<br>"))
 			   	.style("position", "absolute")
 			   	.style("left", xScale(year) + xPos + "px")
-			   	.style("top", 500 + "px")
+			   	.style("top", yScale(-5) + "px")
 			   	.style("opacity", 0.8)
 			   	.attr("id", "info1text")
 			   	.attr("class", "buttonText");
