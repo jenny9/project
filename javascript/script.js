@@ -1,19 +1,17 @@
 'use strict'
 // size of graph svg and legends
-var margin1 = {top: 25, left: 50, right: 50, bottom: 25};
-var margin2 = {right: 30}
+var margin = {top: 25, left: 50, right: 50, bottom: 25};
 var width1 = "100%";
 var height1 = 350;
 
-var width2 = "15%";
-var width3 = "85%";
+var width2 = "85%";
 
 var buttonHeight = 30;
 var buttonWidth = 80;
 
 var legendMargin = 20;
 var legend1Width = 160;
-var legend1Height = height1 - margin1.bottom - margin1.top - buttonHeight;
+var legend1Height = height1 - margin.bottom - margin.top - buttonHeight;
 var legend2Width = buttonWidth + 20; 
 var legend2Height = height1 / 2 - 10;
 
@@ -26,25 +24,48 @@ var channels = ['Ned1', 'Ned2', 'Ned3', 'RTL4', 'SBS 6', 'NICK', 'Tien', 'Ver', 
 var years = ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013'];
 
 // button options in graph 1
-var optionText = ['Public', 'Commercial']
-var lineOptions = ['Groups', 'All']
+var optionText = ['Public', 'Commercial'];
+var lineOptions = ['Groups', 'All'];
  
 // button options in graph 2 
-var buttonOptions = ['Channel', 'Time', 'Day']
+var buttonOptions = ['Channel', 'Time', 'Day'];
 
 // color schemes (colors generated with colorbrewer.org)
 var colors = ['#b2df8a','#ff7f00','#fdbf6f','#e31a1c','#1f78b4','#6a3d9a','#33a02c','#fb9a99','#a6cee3'];
 var weekdayColors = ['#e41a1c', '#377eb8', '#4daf4a', '#984ea3', '#ff7f00', '#ffff33', '#a65628'];
 var timeColors = ['#fff7fb', '#023858'];
-var summedColors = ['#377eb8','#4daf4a']
+var summedColors = ['#377eb8','#4daf4a'];
 
 
 // times shown in legend
-var legendTimes = ["1200", "1400", "1600", "1800", "2000", "2200", "2300"] 
+var legendTimes = ["1200", "1400", "1600", "1800", "2000", "2200", "2300"];
 
 // days of the week
 var weekDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
+// declare variables
+var circles;
+var displayedChannels;
+var opacity; 
+	
+// make var to store if button is pressed
+var buttonPressed = -1; 
+
+// make date objects
+var parseDate = d3.time.format("%d-%m-%Y").parse;
+
+// prepare time scale functions
+var parseTime = d3.time.format.utc("%Y-%m-%d-%H%M").parse;
+
+// get hour and minute of date object
+var parseHour = d3.time.format.utc("%H:%M");
+
+// get day of week of date object
+var selectDay = d3.time.format("%w"); 
+
+// times for Time button coloring
+var minTime = parseTime("2002-01-01-1200");
+var maxTime = parseTime("2002-01-01-2359");
 
 // make svg svg for channel graph
 var svg1 = d3.select("body")
@@ -52,24 +73,24 @@ var svg1 = d3.select("body")
 	.attr("width", width1)
 	.attr("height", height1 + 50)
 	.attr("id", "svg1")
-	.append("g")
+	.append("g");
 
 // make background for svg svg
 // needed for proper functioning of mouseover
 var background1 = svg1.append("rect")
 	.attr("width", "90%")
-	.attr("height", height1 - margin1.bottom - margin1.top)
+	.attr("height", height1 - margin.bottom - margin.top)
 	.attr("id", "background1")
 	.attr("fill", "white") 
-	.attr("transform", "translate(" + (legend1Width + margin1.left) + "," + margin1.top + ")");
+	.attr("transform", "translate(" + (legend1Width + margin.left) + "," + margin.top + ")");
 
 // make group for legend1
 var legend1 = svg1.append("g")
 	.attr("height", legend1Height)
 	.attr("width", legend1Width)
-	.attr("transform", "translate(" + margin1.left + "," + margin1.top + ")");
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var colorButtonGroup = legend1.append("g")
+var colorButtonGroup = legend1.append("g");
 
 var legend1Colors;
 var legend1Text;
@@ -84,28 +105,22 @@ var lineButtons = legend1.selectAll("rect.line")
 			.attr("transform", function(d, i) { return "translate(" + (i * (legend1Width / 2 + 3)) + "," + (legend1Height + 10) + ")" }) 
 			.attr("class", "buttonText");
 
-// make array to remember which lines are drawn 
-var displayedChannels;
-
-var opacity; 
-
 // add border to buttons on legend 1
 lineRects = lineButtons.append("rect")
 	.attr("width", legend1Width / 2 - 3)
 	.attr("height", buttonHeight)
 	.attr("fill", "#e1e1e1")
 	.attr("stroke-width", 1)
-	.attr("stroke", "black")
+	.attr("stroke", "black");
 
 // color active button
  var currentLineButton = d3.select(lineRects[0][1]).attr("fill","#33a02c");
-
 
 // add text to buttons
 textLineButtons = lineButtons.append("text")
 	.text(function(d) { return d })
 	.attr("x", 3)
-	.attr("y", 20)
+	.attr("y", 20);
 	
 // make border around legend1
 var border1 = legend1.append("rect")
@@ -115,80 +130,14 @@ var border1 = legend1.append("rect")
 	.attr("stroke-width", 1)
 	.attr("stroke", "black");
 
-// makes legend according to data displayed
-function makeLegendA(data, colorArray) {
-	// add, remove or update color blocks on legend1 
-	legend1Colors = colorButtonGroup.selectAll("rect")
-		.data(data);
-
-	legend1Colors.exit().remove();
-
-	legend1Colors.enter()
-		.append("rect")
-			.attr("height", 20)
-			.attr("width", 30)
-			.attr("x", 120)
-			.attr("y", function(d, i) { return legend1Height / 10 * (i + 1) - 15; })
-	
-	legend1Colors.attr("fill", function(d, i) { return colorArray[i]})
-			.attr("class", "buttonText")
-			.on("click", function(d, i){
-
-				// toggle opacity of lines in legend 1 on click
-
-				var selectedButton = d3.select(legend1Colors[0][i]);
-
-				if (displayedChannels[i] == 1) {
-					opacity = 0;
-					selectedButton.attr("fill", "#E1E1E1")
-
-				}
-
-				else {
-					opacity = 1;
-					selectedButton.attr("fill", function(){return colorArray[i]})
-
-				}
-
-				d3.select("#line" + i)
-					.style("opacity", opacity);
-
-				// remember if line is displayed
-				displayedChannels[i] = displayedChannels[i] * -1;
-				})
-
-			.on("mouseover", function(d, i){
-				var selectedButton = d3.select(legend1Colors[0][i]);
-				selectedButton.attr("stroke-width", 2)
-					.attr("stroke", "black"); 
-			})
-			.on("mouseout", function(d, i){
-				var selectedButton = d3.select(legend1Colors[0][i]);
-				selectedButton.attr("stroke-width", 0)
-			})
-
-	// add, remove or update legend1Text to legend1
-	legend1Text = colorButtonGroup.selectAll("text")
-		.data(data);
-
-	legend1Text.exit().remove();
-
-	legend1Text.enter()
-		.append("text")
-			.attr("x", 15)
-			.attr("y", function(d, i) { return legend1Height / 10 * (i + 1); })
-
-	legend1Text.text(function(d) { return d });
-	};
-
 makeLegendA(channels, colors); 
 	
 // add x axis label graph 1
 svg1.append("text")
-	.attr("x", legend1Width + margin1.right + margin1.left + 30)
+	.attr("x", legend1Width + margin.right + margin.left + 30)
 	.attr("y", height1 + 15)
 	.attr("class", "axislabel")
-	.text("Year")
+	.text("Year");
 
 // add y axis label graph 1
 svg1.append("text")
@@ -196,21 +145,21 @@ svg1.append("text")
     .attr("transform", "rotate(-90)")
 	.attr("x", -325)
 	.attr("y", 265)
-	.text("Number of broadcasts in top 50")
+	.text("Number of broadcasts in top 50");
 
 // make svg svg for year graph legend
 var svg2 = d3.select("body")
 	.append("svg")
-		.attr("width", legend2Width + 2*(margin1.right + margin1.left))
+		.attr("width", legend2Width + 2*(margin.right + margin.left))
 		.attr("height", height1)
 		.attr("id", "svg2")
 			.append("g")
-			.attr("transform", "translate(" + margin1.left + ", 0)")
+			.attr("transform", "translate(" + margin.left + ", 0)");
 
 // make group for legend2box
 var legend2box = svg2.append("g")
 	.attr("height", height1)
-	.attr("width", legend2Width)
+	.attr("width", legend2Width);
 
 // make group element for all buttons of legend2box
 var buttonGroup = legend2box.selectAll("g")
@@ -227,13 +176,13 @@ var buttons2 = buttonGroup.append("rect")
 	.attr("fill", "#E1E1E1")
 	.attr("stroke-width", 1)
 	.attr("stroke", "black")
-	.attr("class", "buttonText")
+	.attr("class", "buttonText");
 
 var textLegend2 = buttonGroup.append("text")
 	.text(function(d) { return d })
 	.attr("x", buttonWidth * 0.1)
 	.attr("y", buttonHeight * 0.5 + 6)
-	.attr("class", "buttonText")
+	.attr("class", "buttonText");
 
 // make border around buttons on legend2box
 var border2a = legend2box.append("rect")
@@ -250,7 +199,7 @@ var border2b = legend2box.append("rect")
 	.attr("fill", "none")
 	.attr("stroke-width", 1)
 	.attr("stroke", "black")
-	.attr("y", legend2Height - 30)
+	.attr("y", legend2Height - 30);
 
 // make group for year buttons
 var chooseYear = svg2.append("g")
@@ -272,16 +221,13 @@ var yearButtons = yearButtonGroup.append("rect")
 	.attr("stroke-width", 1)
 	.attr("stroke", "black")
 	.attr("class", "buttonText")
-	.attr("id", function(d, i) { return "yearButton" + i})
+	.attr("id", function(d, i) { return "yearButton" + i});
 
 var textYearButtons = yearButtonGroup.append("text")
 	.text(function(d) {return d})
 	.attr("x", 2)
 	.attr("y", buttonHeight * 0.6)
 	.attr("class", "buttonText");
-
-// make var to store if button is pressed
-var buttonPressed = -1; 
 
 // load in all data
 var q1 = queue()
@@ -311,16 +257,16 @@ var q1 = queue()
 q1.awaitAll(function(error, files) {
 
 	// separate year files from channel files
-	var start = years.length 
-	var channelFiles = []
-	var yearFiles = []
+	var start = years.length;
+	var channelFiles = [];
+	var yearFiles = [];
 
 	channels.forEach(function(d, i) {
-		channelFiles.push(files[i + start])
+		channelFiles.push(files[i + start]);
 		})
 	
 	years.forEach(function(d, i){
-		yearFiles.push(files[i])
+		yearFiles.push(files[i]);
 	})
 	
 	// convert string to int 
@@ -328,17 +274,17 @@ q1.awaitAll(function(error, files) {
 		channelFiles[0].forEach(function(d, j){
 			channelFiles[i][j].Jaar = +channelFiles[i][j].Jaar;
 			channelFiles[i][j].Aantal = +channelFiles[i][j].Aantal;
-			})
+			});
 		});
 
 	// determine scaling for graph 1
 	var xScale = d3.scale.linear()
 		.domain(d3.extent(channelFiles[0], function(channelFiles) { return channelFiles.Jaar; }))	
-		.range([legend2Width + 2 * (margin1.left + margin1.right), parseInt(d3.select("#svg1").style("width")) - margin1.right]); 
+		.range([legend2Width + 2 * (margin.left + margin.right), parseInt(d3.select("#svg1").style("width")) - margin.right]); 
 
 	var yScale = d3.scale.linear()
 		.domain([0, 50])
-		.range([height1-margin1.top, margin1.bottom]);
+		.range([height1-margin.top, margin.bottom]);
 
 	// makes line from individual channel data
 	var line = d3.svg.line()
@@ -348,35 +294,12 @@ q1.awaitAll(function(error, files) {
 	// makes line from grouped channel data
 	var line2 = d3.svg.line()
 		.x(function(data) {return xScale(data[0])})
-		.y(function(data) {return yScale(data[1])})
+		.y(function(data) {return yScale(data[1])});
 	
-	// draw lines of all data files
-	function allLines(files, line, colors){
-		var lines = svg1.selectAll("path.dataline")
-			.data(files)
-
-		lines.exit().remove();
-
-		lines.enter()
-			.append("path")
-			.attr("class", "dataline")
-			.attr("fill", "none")
-			.attr("stroke-width", "3")
-
-		lines
-			.attr("d", line)
-			.attr("stroke", function(d, i) { return colors[i] })
-			.attr("id", function(d, i) { return "line" + i })
-			.style("opacity", 1);
-
-			// set all lines to visible
-			displayedChannels = [1, 1, 1, 1, 1, 1, 1, 1, 1];
-		};
-
 	allLines(channelFiles, line, colors);
 
-	var pub = []
-	var com = []
+	var pub = [];
+	var com = [];
 
 	// sum data to display commercial and public
 	channelFiles[0].forEach(function(d, i) {
@@ -409,7 +332,7 @@ q1.awaitAll(function(error, files) {
 	svg1.append("g")
 		.call(xAxis)
 		.attr("class", "axis")
-		.attr("transform", "translate(0, 325)")
+		.attr("transform", "translate(0, 325)");
 	
 	svg1.append("g")
 		.call(yAxis)
@@ -420,11 +343,13 @@ q1.awaitAll(function(error, files) {
 	var mouse; 
 	var options = 1; 
 	var currentYear;
+	var currentButton;
+
 
 	// make info box appear on mouse mouve 
 	svg1.on("mousemove", function(){
 		mouse = d3.mouse(this);
-		if (mouse[0] > legend1Width + margin1.left + margin1.right & mouse[0] < parseInt(d3.select("#svg1").style("width"))) {
+		if (mouse[0] > legend1Width + margin.left + margin.right & mouse[0] < parseInt(d3.select("#svg1").style("width"))) {
 			// remove previous infobox
 			d3.select("#info1text").remove();
 			d3.select("#info1line").remove();
@@ -443,17 +368,16 @@ q1.awaitAll(function(error, files) {
 			// draw vertical line
 			var verticalLine = svg1.append("line")
 				.attr("x1", xScale(year))
-				.attr("y1", margin1.top)
+				.attr("y1", margin.top)
 				.attr("x2", xScale(year))
-				.attr("y2", height1 - margin1.bottom)
+				.attr("y2", height1 - margin.bottom)
 				.attr("stroke-width", 2)
 				.attr("stroke", "#555555")
 				.attr("id", "info1line");
 
-			var infoText = ["<u>" + year + "</u>"]
+			var infoText = ["<u>" + year + "</u>"];
 					
 			// add info of displayed channels to infobox
-
 			// if individual channels are displayed
 			if (options == 1) {	
 				for (var i = 0; i < channels.length; i++) {
@@ -466,7 +390,7 @@ q1.awaitAll(function(error, files) {
 			else {
 				for (var i = 0; i < optionText.length; i++) {
 					if (displayedChannels[i] == 1){
-						infoText.push(optionText[i] + " " + "<b>" + summedFiles[i][j][1] + "</b>")
+						infoText.push(optionText[i] + " " + "<b>" + summedFiles[i][j][1] + "</b>");
 						}
 					}
 				}
@@ -494,11 +418,11 @@ q1.awaitAll(function(error, files) {
 		d3.selectAll("#info1text").remove();
 
 		// decolor previous button
-		currentLineButton.style("fill", "#E1E1E1")
+		currentLineButton.style("fill", "#E1E1E1");
 
 		// color current button 
-		currentLineButton = d3.select(this).select("rect")
-		currentLineButton.style("fill", "#33a02c")
+		currentLineButton = d3.select(this).select("rect");
+		currentLineButton.style("fill", "#33a02c");
 		
 		if (i == 0){
 			allLines(summedFiles, line2, summedColors);
@@ -512,11 +436,7 @@ q1.awaitAll(function(error, files) {
 			options = 1;
 			}
 		})
-	
-	var parseDate = d3.time.format("%d-%m-%Y").parse;
-	 
-	var circles; 
-
+		 
 	function zoom() {
  		circles.attr("transform", transform)
  		svg3.select("#yAxis2").call(yAxis2);
@@ -529,46 +449,45 @@ q1.awaitAll(function(error, files) {
 	
 	// make svg for graph 2 
 	var svg3 = d3.select("body").append("svg")
-		.attr("width", width3)
+		.attr("width", width2)
 		.attr("height", height1)
 		.attr("id", "svg3")
 		.append("g")
-			.attr("transform", "translate(25," + (height1 - 15) + ")")
+			.attr("transform", "translate(25," + (height1 - 15) + ")");
 	
-	var trueWidth = parseInt(d3.select("#svg3").style("width"))
+	var trueWidth = parseInt(d3.select("#svg3").style("width"));
 	
 	// determine scaling 
 	var xScale2 = d3.time.scale()
 		.domain(domain(0))	
-		.range([15, trueWidth - margin1.right])
+		.range([15, trueWidth - margin.right]);
 
 	var yScale2 = d3.scale.linear()
 		.domain([0, 9000000])
-		.range([-margin1.bottom, -height1 + margin1.top])
-		//.clamp(true);
+		.range([-margin.bottom, -height1 + margin.top]);
 
 	var x = d3.scale.linear()
-   		.domain([15, trueWidth - margin1.right])
-   		.range([25, trueWidth - margin1.right]);
+   		.domain([15, trueWidth - margin.right])
+   		.range([25, trueWidth - margin.right]);
 
 	var zooming = d3.behavior.zoom();
 
 	// call zooming behavior
-	svg3.call(zooming.x(xScale2).y(yScale2).scaleExtent([1, 5]).center([-150, -110]).on("zoom", zoom))
+	svg3.call(zooming.x(xScale2).y(yScale2).scaleExtent([1, 5]).center([-150, -110]).on("zoom", zoom));
 	
 	svg3.append("rect")
 		.attr("x", 10)
 		.attr("y", -height1)
 		.attr("width", 1500)
 		.attr("height", height1 + 70)
-		.attr("fill", "white")
+		.attr("fill", "white");
 
 	// add x axis label graph 1
 	svg3.append("text")
 		.attr("x", 15)
 		.attr("y", 15)
 		.attr("class", "axislabel")
-		.text("Date")
+		.text("Date");
 
 	// add y axis label graph 1
 	svg3.append("text")
@@ -576,14 +495,7 @@ q1.awaitAll(function(error, files) {
 	    .attr("transform", "rotate(-90)")
 		.attr("x", 0)
 		.attr("y", -15)
-		.text("Number of viewers")
-
-	// function to determine first and last days of year
-	function domain(i) {
-	var jan1 = new Date("December 31," + (i + 2001) + " GMT");
-	var dec31 = new Date("December 31," + (i + 2002) + " GMT");
-	return [jan1, dec31];
-	};
+		.text("Number of viewers");
 
 	// make axes
 	var xAxis2 = d3.svg.axis()
@@ -595,29 +507,29 @@ q1.awaitAll(function(error, files) {
 		.ticks(10)
 		.tickFormat(d3.format(".2s"))
 		.orient("left")
-		.scale(yScale2)
+		.scale(yScale2);
 
 	// add axes to svg
 	svg3.append("g")
 		.attr("id", "xAxis2")
 		.attr("class", "axis")
 		.call(xAxis2)
-		.attr("transform", "translate(10," + -margin1.bottom + ")");
+		.attr("transform", "translate(10," + -margin.bottom + ")");
 	
 	svg3.append("g")
 		.attr("id", "yAxis2")
 		.attr("class", "axis")
 		.call(yAxis2)
-		.attr("transform", "translate(" + (0.5 * margin1.left) + ",0)");
+		.attr("transform", "translate(" + (0.5 * margin.left) + ",0)");
 
 	// prepare to alter date object
 	var formatDate = d3.time.format("%d-%m");
-	var formatDay = d3.time.format("%A")
+	var formatDay = d3.time.format("%A");
 
 	// make informaton box to show on mouse over	
 	var tip = d3.tip()
 		.html(function(d){ 
-			return "<div class='tooltipHOI'>" + d.Title + "<br>" + formatDay(d.Date) + " " 
+			return "<div class='tooltip1'>" + d.Title + "<br>" + formatDay(d.Date) + " " 
 			+ formatDate(d.Date) + "<br>" + d.Time + "<br>" + d.Channel + "<br>" + 
 			d.Viewers + " viewers</div>" });
 
@@ -626,25 +538,12 @@ q1.awaitAll(function(error, files) {
 	// make array to remember which year data is already loaded
 	var active = new Uint8Array(years.length);
 
-	var currentButton;
-
-	yearButtonGroup.on("click", displayYear)
-
-	// prepare to make time scale for time coloring
-	var parseTime = d3.time.format.utc("%Y-%m-%d-%H%M").parse
-	var parseHour = d3.time.format.utc("%H:%M")
-	var minTime = parseTime("2002-01-01-1200")
-	var maxTime = parseTime("2002-01-01-2359")
-
-	// get day of week from date object
-	var selectDay = d3.time.format("%w");
+	yearButtonGroup.on("click", displayYear);
 
 	// make date objecs of legend times
 	legendTimes.forEach(function(d, i) {
-		legendTimes[i] = parseTime("2002-01-01-" + legendTimes[i])
+		legendTimes[i] = parseTime("2002-01-01-" + legendTimes[i]);
 		})
-
-
 
 	function displayYear(d, i) {
 
@@ -654,7 +553,7 @@ q1.awaitAll(function(error, files) {
  		svg3.select(".yAxis").call(yAxis2);
 
 		// decolor buttons
-		yearButtons.style("fill", "#E1E1E1")
+		yearButtons.style("fill", "#E1E1E1");
 
 		// color current button 
 		d3.select("#yearButton" + i).style("fill", "#33a02c");
@@ -665,8 +564,8 @@ q1.awaitAll(function(error, files) {
 			// remove Dutch point delimiters
 			// make int from string
 			yearFiles[i].forEach(function(files) {
-				files.Date = parseDate(files.Date)
-				files.Viewers = +files.Viewers.split('.').join('')
+				files.Date = parseDate(files.Date);
+				files.Viewers = +files.Viewers.split('.').join('');
 				});
 
 			// remember data is converted
@@ -676,10 +575,10 @@ q1.awaitAll(function(error, files) {
 		// determine scaling 
 		xScale2 = d3.time.scale()
 			.domain(domain(i))	
-			.range([15, trueWidth - margin1.right]); 
+			.range([15, trueWidth - margin.right]); 
 			
 		circles = svg3.selectAll("circle")
-			.data(yearFiles[i])
+			.data(yearFiles[i]);
 		
 		circles.enter()
 			.append("circle")
@@ -689,17 +588,17 @@ q1.awaitAll(function(error, files) {
 				.attr("stroke", "#000000")
 				.on("mouseover", tip.show)
 				.on("mouseout", tip.hide)
-				.attr("class", "circle")
+				.attr("class", "circle");
 
 		circles		
 			.transition().duration(500)
     		.attr("transform", transform);
 
 		if (buttonPressed != -1) {
-			colorCircles(d, buttonPressed)
+			colorCircles(d, buttonPressed);
 		}
 
-		currentButton = d3.select(this) 
+		currentButton = d3.select(this);
 
 		buttonGroup.on("click", function(d, i) {
 			// decolor previous button
@@ -711,7 +610,108 @@ q1.awaitAll(function(error, files) {
 			colorCircles(d, i);
 		});
 
-		function colorCircles (d, i) {
+		
+		};
+	});
+
+// makes legend according to data displayed
+function makeLegendA(data, colorArray) {
+	// add, remove or update color blocks on legend1 
+	legend1Colors = colorButtonGroup.selectAll("rect")
+		.data(data);
+
+	legend1Colors.exit().remove();
+
+	legend1Colors.enter()
+		.append("rect")
+			.attr("height", 20)
+			.attr("width", 30)
+			.attr("x", 120)
+			.attr("y", function(d, i) { return legend1Height / 10 * (i + 1) - 15; });
+	
+	legend1Colors.attr("fill", function(d, i) { return colorArray[i]})
+		.attr("class", "buttonText")
+		.on("click", function(d, i){
+
+			// toggle opacity of lines in legend 1 on click
+
+			var selectedButton = d3.select(legend1Colors[0][i]);
+
+			if (displayedChannels[i] == 1) {
+				opacity = 0;
+				selectedButton.attr("fill", "#E1E1E1")
+
+			}
+
+			else {
+				opacity = 1;
+				selectedButton.attr("fill", function(){return colorArray[i]})
+
+			}
+
+			d3.select("#line" + i)
+				.style("opacity", opacity);
+
+			// remember if line is displayed
+			displayedChannels[i] = displayedChannels[i] * -1;
+			})
+
+		// make nice button mouse over animation
+		.on("mouseover", function(d, i){
+			var selectedButton = d3.select(legend1Colors[0][i]);
+			selectedButton.attr("stroke-width", 2)
+				.attr("stroke", "black"); 
+		})
+		.on("mouseout", function(d, i){
+			var selectedButton = d3.select(legend1Colors[0][i]);
+			selectedButton.attr("stroke-width", 0);
+		});
+
+	// add, remove or update legend1Text to legend1
+	legend1Text = colorButtonGroup.selectAll("text")
+		.data(data);
+
+	legend1Text.exit().remove();
+
+	legend1Text.enter()
+		.append("text")
+			.attr("x", 15)
+			.attr("y", function(d, i) { return legend1Height / 10 * (i + 1); });
+
+	legend1Text.text(function(d) { return d });
+	};
+
+// draw lines of all data files
+function allLines(files, line, colors){
+	var lines = svg1.selectAll("path.dataline")
+		.data(files);
+
+	lines.exit().remove();
+
+	lines.enter()
+		.append("path")
+		.attr("class", "dataline")
+		.attr("fill", "none")
+		.attr("stroke-width", "3")
+
+	lines
+		.attr("d", line)
+		.attr("stroke", function(d, i) { return colors[i] })
+		.attr("id", function(d, i) { return "line" + i })
+		.style("opacity", 1);
+
+		// set all lines to visible
+		displayedChannels = [1, 1, 1, 1, 1, 1, 1, 1, 1];
+	};
+
+// make date object of first and last day of year
+function domain(i) {
+	var jan1 = new Date("December 31," + (i + 2001) + " GMT"); // -1 day to display January tick
+	var dec31 = new Date("December 31," + (i + 2002) + " GMT");
+	return [jan1, dec31];
+	};
+
+function colorCircles (d, i) {
 			
 			// if button 'Channel' is clicked
 			if (i == 0) {
@@ -742,7 +742,7 @@ q1.awaitAll(function(error, files) {
 						.attr("y", function(d, k) {return k * 20 + legend2Height - 10})
 						.text(function(d) {return d})
 						.attr("class", "buttonText")
-						.attr("class", "legend2")
+						.attr("class", "legend2");
 
 				buttonPressed = 0;
 				}
@@ -753,7 +753,7 @@ q1.awaitAll(function(error, files) {
 				// determine color scale for coloring on time
 				var colorScale = d3.time.scale()
 					.domain([minTime, maxTime])
-					.range(timeColors)
+					.range(timeColors);
 
 				// remove previous legend
 				d3.selectAll(".legend2").remove();
@@ -774,7 +774,7 @@ q1.awaitAll(function(error, files) {
 							.attr("fill", function(d) {return colorScale(d)})	
 							.attr("stroke-width", 1)
 							.attr("stroke", "black")
-							.attr("class", "legend2")
+							.attr("class", "legend2");
 
 				var legend2Text = legend2box.selectAll("text.info")
 					.data(legendTimes)
@@ -792,7 +792,7 @@ q1.awaitAll(function(error, files) {
 									}
 								})
 							.attr("class", "buttonText")
-							.attr("class", "legend2")
+							.attr("class", "legend2");
 
 				buttonPressed = 1;
 				}
@@ -829,14 +829,10 @@ q1.awaitAll(function(error, files) {
 						.text(function(d, k) {return weekDays[k]})
 						.style("font-size", "14px")
 						.attr("class", "buttonText")
-						.attr("class", "legend2")
+						.attr("class", "legend2");
 
 				buttonPressed = 2;
 
 				}
 			};
-
-
-		};
-	});
 
