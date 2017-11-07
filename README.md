@@ -5,7 +5,7 @@
 ![](Doc/product4.PNG)
 ![](Doc/product5.PNG)
 
-Deze datavisualisatie 'Television top 50 in the Netherlands over the years' is gemaakt door Jenny Hasenack op 28-01-2016. Deze visualisatie probeert de gebruiker een inzicht te geven in de oorsprong van de meest populaire uitzendingen/programma's in een jaar. Ook laat het zien hoe een zender het doet wat betreft meest bekeken uitzendingen door de jaren heen. Zenders kunnen op dit gebied met elkaar worden vergeleken.
+Deze datavisualisatie 'Television top 50 in the Netherlands over the years' is gemaakt door Jenny op 28-01-2016. Deze visualisatie probeert de gebruiker een inzicht te geven in de oorsprong van de meest populaire uitzendingen/programma's in een jaar. Ook laat het zien hoe een zender het doet wat betreft meest bekeken uitzendingen door de jaren heen. Zenders kunnen op dit gebied met elkaar worden vergeleken.
 Verder geeft het programma weer welke programma's er per jaar in de top 50 van meest bekeken uitzendingen stonden. Van deze programma's kan dan worden bekeken welke zender, uitzendtijd en dag van de week daarbij hoort. 
 
 # Data
