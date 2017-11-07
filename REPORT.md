@@ -1,7 +1,6 @@
 # Projectverslag
 ## Datavisualisatie 50 best bekeken tv-momenten door de jaren heen
-Jenny Hasenack   
-10367519    
+Jenny 
 28-01-2016
 Programmeerproject   
 Datavisualisatie   
